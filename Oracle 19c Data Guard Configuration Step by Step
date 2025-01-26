@@ -102,36 +102,14 @@ You will create the adump directory later on.
 
 Enable flashback
 
-1
 alter database flashback on;
+
 Check the password file.
 
-1
 ls /u01/app/oracle/product/19.0.0/db_1/dbs/orapw*
+
 Add to tnsnames.ora
 
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
 vi $TNS_ADMIN/tnsnames.ora
  
 BCN =
@@ -154,26 +132,9 @@ PARIS =
       (SERVICE_NAME = PARIS.localdomain)
     )
   )
+
 On the primary server, add a static listener registration
 
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
 vi $TNS_ADMIN/listener.ora
   
 LISTENER =
@@ -194,8 +155,8 @@ SID_LIST_LISTENER=
       )
 Reload the listener
 
-1
 lsnrctl reload
+
 2. Prepare the standby database
 Create an init file with just the db_name.
 
@@ -203,40 +164,17 @@ Remember, the db_name will be the same in both the primary and the standby datab
 
 Only the db_unique_name will be different.
 
-1
 echo 'DB_NAME=BCN' > $ORACLE_HOME/dbs/initPARIS.ora
 Copy the password file from the primary server to the standby server.
 
-1
-2
-3
 scp oracle@srv1:/u01/app/oracle/product/19.0.0/db_1/dbs/orapwBCN /u01/app/oracle/product/19.0.0/db_1/dbs/orapwPARIS
  
 ls -al /u01/app/oracle/product/19.0.0/db_1/dbs/orapwPARIS
 Copy the tnsnames.ora file
 
-1
 scp oracle@srv1:/u01/app/oracle/product/19.0.0/db_1/network/admin/tnsnames.ora /u01/app/oracle/product/19.0.0/db_1/network/admin/tnsnames.ora
 On the standby server, add a static listener registration which will be needed to duplicate a database
 
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
 vi $TNS_ADMIN/listener.ora
  
 LISTENER =
@@ -257,37 +195,26 @@ SID_LIST_LISTENER=
       )
 Reload the listener
 
-1
 lsnrctl reload
+
 Create the adump folder
 
-1
+
 mkdir -p /u01/app/oracle/admin/PARIS/adump
 Start the standby BD in nomount
 
-1
-2
-3
 sqlplus / as sysdba
 startup nomount
 exit
+
 3. Duplicate the database
 Connect to RMAN
-
+rman target /
 You should connect to the primary database and to the standby at the same time.
 
-1
 rman TARGET sys/oracle@BCN AUXILIARY sys/oracle@PARIS
 Duplicate the database
 
-1
-2
-3
-4
-5
-6
-7
-8
 DUPLICATE TARGET DATABASE FOR STANDBY FROM ACTIVE DATABASE DORECOVER
 SPFILE
 SET DB_UNIQUE_NAME 'PARIS' COMMENT 'Is standby'
@@ -296,14 +223,11 @@ SET AUDIT_FILE_DEST '/u01/app/oracle/admin/PARIS/adump'
 SET CONTROL_FILES '/u01/app/oracle/oradata/PARIS/controlfile/control01.ctl'
 SET FAL_SERVER 'BCN'
 NOFILENAMECHECK;
+
 Once the duplicate command is done, you have already created your standby database.
 
 Now connect to the standby database and verify its role.
 
-1
-2
-3
-4
 sqlplus / as sysdba
 select database_role from v$database;
 show parameter db_name
@@ -312,110 +236,77 @@ The db_name should be the same as the primary database and the db_unique_name sh
 
 Now start the redo apply process on the standby database.
 
-1
-2
-alter database recover managed standby database
-disconnect from session;
+alter database recover managed standby database disconnect from session;
+
 Check on the standby database that it is applying archivers with this.
 
-1
-2
-select role, thread#, sequence#, action
-from v$dataguard_process;
+select role, thread#, sequence#, action from v$dataguard_process;
+
 Now go to the primary and check the archivers too and do a switch logfile to generate a new archiver
 
-1
-2
-3
-4
-5
-select sequence#, first_time, next_time 
-from v$archived_log
-order by sequence#;
+select sequence#, first_time, next_time from v$archived_log order by sequence#;
  
 alter system switch logfile;
+
 Now go to the standby database and check that the new archiver has been applied.
 
-1
-2
-3
-select sequence#, first_time, next_time, applied 
-from v$archived_log
-order by sequence#;
+select sequence#, first_time, next_time, applied from v$archived_log order by sequence#;
+
 Stop the recovery process on the standby
-
-1
 alter database recover managed standby database cancel;
+
 Enable flashback on the standby
-
-1
 alter database flashback on;
-Start the recovery process again on the standby
 
-1
-2
-alter database recover managed standby database
-disconnect from session;
+Start the recovery process again on the standby
+alter database recover managed standby database disconnect from session;
+
 4. Perform a switchover with sqlplus
 Fist confirm that the synchronization is ready to perform a switchover
 
-1
-2
 sqlplus / as sysdba
 alter database switchover to PARIS verify;
+
 If you don’t get any error in the previous command then all is good.
 
 If you do get errors, then check the alert file for more details.
 
 On the primary database check that there are no gaps
 
-1
-2
-3
-select status, gap_status 
-from v$archive_dest_status 
-where dest_id = 2;
+select status, gap_status from v$archive_dest_status where dest_id = 2;
+
 Switchover to standby database
 
 Execute from the primary database:
-
-1
 alter database switchover to PARIS;
+ 
 Now go to srv2 (which is now the primary database) and open the database
 
-1
-2
 sqlplus / as sysdba
 alter database open;
+
 Now go to srv1 (the new standby database) and mount the database
 
-1
-2
 startup mount
 alter database recover managed standby database disconnect;
 On srv1 verify that everything is ok
 
-1
-2
-3
 select database_role from v$database;
- 
 select role, thread#, sequence#, action from v$dataguard_process;
+
 Now let’s move everything back to the starting point.
 
 You’ll perform a switchback.
 
 First verify that both databases are ready.
-
-1
 alter database switchover to BCN verify;
+
 Now go to srv2 and execute the switchover again.
-
-1
 alter database switchover to BCN;
-And open the database on srv1
 
+And open the database on srv1
 alter database open;
+
 On srv2 mount the database and start the recovery process again
 
 startup mount
