@@ -1,0 +1,12 @@
+Open the Command Line Processor (CLP) for DB2.
+Then type:
+db2 list active databases;
+now take database name
+
+Connect to your database.
+db2 connect to your_database_name
+
+Retrieve the database configuration to find the archive log path:
+db2 get db cfg for your_database_name | grep "Path to log files"
+
+db2 get db cfg for SAMPLE | grep "LOGARCHMETH"
