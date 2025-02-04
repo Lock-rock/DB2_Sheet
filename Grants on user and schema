@@ -1,0 +1,38 @@
+*********************************************************************************************
+check table list in spacific schema:
+
+db2 "SELECT TABNAME FROM SYSCAT.TABLES WHERE TABSCHEMA = '$SCHEMA'"
+
+db2 -tnx "select distinct 'GRANT Select ON TABLE '||
+    '\"'||rtrim(tabschema)||'\".\"'||rtrim(tabname)||'\" TO USER ABHYUDAI;'
+    from syscat.tables
+    where tabschema = 'INTERMEDIARY_ONBOARDING' "  >> ABHYUDAI.sql
+
+db2 -tvf ABHYUDAI.sql
+
+
+Check grant to user all:
+
+db2 "SELECT distinct(AUTHID) FROM SYSIBMADM.PRIVILEGES
+WHERE OBJECTSCHEMA='SIEBEL' and PRIVILEGE in ('SELECT','INSERT','UPDATE','DELETE')"
+*************************************************************************************************
+For check grant on table and schema:
+SELECT 
+    GRANTOR, 
+    GRANTEE, 
+    TABSCHEMA, 
+    TABNAME, 
+    CONTROLAUTH, 
+    ALTERAUTH, 
+    DELETEAUTH, 
+    INDEXAUTH, 
+    INSERTAUTH, 
+    SELECTAUTH, 
+    UPDATEAUTH, 
+    REFAUTH 
+FROM 
+    SYSCAT.TABAUTH 
+WHERE 
+    TABSCHEMA = 'YOUR_SCHEMA' 
+    AND TABNAME = 'YOUR_TABLE';
+***************************************************************************************************
