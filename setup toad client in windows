@@ -1,0 +1,6 @@
+first install clinet db2 software :
+then run in cmd "progrmafiel/ibm/../../bin/db2vel.exe
+
+and set db2 enviroment:
+
+db2cmd -i -w db2clpsetcp 
