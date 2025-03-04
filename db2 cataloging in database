@@ -1,0 +1,47 @@
+Cataloging a Database:
+1. To access a remote database, you need to catalog it on your local DB2 client. This involves creating an entry in the system database directory.
+
+db2 catalog tcpip node <node_name> remote <hostname> server <port_number>
+db2 catalog database <database_name> as <alias_name> at node <node_name>
+
+2. Cataloging a Node
+Before cataloging a database, you must catalog the node where the database resides.
+
+
+db2 catalog tcpip node <node_name> remote <hostname> server <port_number>
+<node_name>: A unique name for the node.
+<hostname>: The hostname or IP address of the server.
+<port_number>: The port number on which the DB2 server is listening.
+3. Cataloging a Database
+Once the node is cataloged, you can catalog the database.
+
+
+db2 catalog database <database_name> as <alias_name> at node <node_name>
+<database_name>: The name of the database on the remote server.
+<alias_name>: A local alias for the database.
+<node_name>: The node name you used in the previous step.
+4. Uncataloging a Database
+If you need to remove a database from the catalog, you can use the following command:
+
+
+db2 uncatalog database <alias_name>
+5. Uncataloging a Node
+Similarly, to remove a node from the catalog:
+
+
+db2 uncatalog node <node_name>
+6. Listing Cataloged Databases and Nodes
+To view the list of cataloged databases and nodes, you can use:
+
+
+db2 list database directory
+db2 list node directory
+Example
+Here’s a complete example of cataloging a database:
+
+
+db2 catalog tcpip node mynode remote 192.168.1.100 server 50000
+db2 catalog database sample as mysample at node mynode
+This example catalogs a node named mynode with the IP address 192.168.1.100 and port 50000, and then catalogs a database named sample with the alias mysample.
+
+Feel free to reach out if you need more detailed information or assistance with specific scenarios!
