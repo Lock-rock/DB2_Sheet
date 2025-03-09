@@ -45,3 +45,18 @@ db2 catalog database sample as mysample at node mynode
 This example catalogs a node named mynode with the IP address 192.168.1.100 and port 50000, and then catalogs a database named sample with the alias mysample.
 
 Feel free to reach out if you need more detailed information or assistance with specific scenarios!
+
+
+
+===============================================================================================================================
+db2 catalog tcpip node <NODENAME> remote <REMOTE> server <PORT>.
+
+db2 catalog database <database_name> at node <node_name>.
+
+ db   CONNECT TO database  USER <user> USING <password>
+
+db2 uncatalog node <NODENAME>.
+
+db2  uncatalog database database <database_name>
+
+===============================================================================================================================
