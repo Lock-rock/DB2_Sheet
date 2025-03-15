@@ -7,13 +7,17 @@ db2 force application all; db2 force application all; db2 force application all;
 db2 deactivate db DBNAME;
 db2 terminate
 
-START DB2
-
-STOP HADR (IF EXIST)
-db2 start hadr on db DBNAME as standby
+START DB2:
 
 db2start
 db2 activate db DBNAME
 db2 connect to DBNAME
+db2 start hadr on db DBNAME as primary
 
 db2 list applications;
+
+start hadr on primary:
+db2 start hadr on db DBNAME as primary
+
+start hadr on Dr side:
+db2 start hadr on db DBNAME as standby
