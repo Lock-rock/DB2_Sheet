@@ -53,7 +53,11 @@ db2 catalog tcpip node <NODENAME> remote <REMOTE> server <PORT>.
 
 db2 catalog database <database_name> at node <node_name>.
 
- db   CONNECT TO database  USER <user> USING <password>
+db2   CONNECT TO database  USER <user> USING <password>
+
+db2 LIST DATABASE DIRECTORY
+
+db2 LIST NODE DIRECTORY
 
 db2 uncatalog node <NODENAME>.
 
