@@ -7,3 +7,38 @@ ORDER BY TABNAME;
 
 Example:
 RUNSTATS ON TABLE MYSCHEMA.TABLE1 WITH DISTRIBUTION AND DETAILED INDEXES ALL;
+
+create script for runstat on all table in database:
+$ cat runstats11.sh
+#!/bin/bash
+# Run RUNSTATS on all user-defined tables in the database
+
+# Connect to the database
+db2 connect to SOLIXDB
+if [ $? -ne 0 ]; then
+    echo "Failed to connect to the database. Exiting."
+    exit 1
+fi
+
+# Function to check connection and reconnect if necessary
+check_connection() {
+    db2 "SELECT 1 FROM SYSIBM.SYSDUMMY1"
+    if [ $? -ne 0 ]; then
+        echo "Connection lost. Reconnecting..."
+        db2 connect to SOLIXDB
+    fi
+}
+
+# Exclude system schemas (adjust the list if needed)
+db2 -x "SELECT 'RUNSTATS ON TABLE ' || RTRIM(TABSCHEMA) || '.' || RTRIM(TABNAME) || ' AND INDEXES ALL ALLOW WRITE ACCESS'
+        FROM SYSCAT.TABLES
+        WHERE TYPE = 'T'
+        AND TABSCHEMA NOT IN ('SYSIBM', 'SYSCAT', 'SYSSTAT', 'SYSTOOLS', 'SYSPROC')" | while read -r runstats_cmd
+do
+    check_connection  # Check and reconnect if necessary
+    echo "Running: db2 \"$runstats_cmd\""
+    db2 "$runstats_cmd"
+done ###made by Lock
+
+# Terminate the database connection
+db2 terminate
