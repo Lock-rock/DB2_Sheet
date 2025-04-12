@@ -1,0 +1,5 @@
+find db2 alert log path:
+db2 get dbm cfg | grep -i DIAG
+
+find for hour condition in alert logs:
+db2diag -gi "Level:=error" -H 1h
