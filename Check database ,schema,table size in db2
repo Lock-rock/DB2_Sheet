@@ -1,0 +1,21 @@
+How to know the table, schema and database size
+The table size is the sum of pagesize*(number of table pages) plus pagesize*(number of index pages)
+
+
+
+Table Size:
+ db2 "with rs as (select distinct(substr(t.tabname,1,35)) as table, t.card as card,t.type as type , t.fpages as fpages, case when ind.nleaf is null then 0 else 
+ind.nleaf end as nleaf, ts.pagesize as pagesize,  t.tabname tab2, t.tabschema as schema from syscat.tables t inner join syscat.tablespaces ts on t.tbspaceid=ts.tbspaceid left join syscat.indexes ind on t.tabname=ind.tabname) select table,(sum(nleaf)+fpages)*pagesize as size,card from rs where schema='<schema_name>' and
+type='T' and table='<table_name>' group by card,table,pagesize,fpages"
+
+
+Tables Size for one specific schema:
+db2 "with rs as (select distinct(substr(t.tabname,1,35)) as table, t.card as card, t.type as type ,t.fpages as fpages, case when ind.nleaf is null then 0 else ind.nleaf end as nleaf,ts.pagesize as pagesize,  t.tabname tab2, t.tabschema as schema from syscat.tables t inner join syscat.tablespaces ts on t.tbspaceid=ts.tbspaceid left join syscat.indexes ind on t.tabname=ind.tabname) select table,(sum(nleaf)+fpages)*pagesize as size,\
+card from rs where schema='<schema_name>' and type='T' group by card,table,pagesize,fpages"
+
+
+Schema Size
+db2 "select ((select sum(fpages*pagesize) from syscat.tablespaces as a, syscat.tables as b where a.TBSPACEID=b.TBSPACEID and tabschema='<schema_name>' group by tabschema)+(select sum(nleaf*pagesize) from syscat.tablespaces as a, syscat.indexes as b where a.TBSPACEID=b.TBSPACEID and tabschema='<schema_name>' group by tabschema))/1024 as SCHEMA_SIZE_KB from sysibm.sysdummy1"
+
+Database Size
+db2 "select sum(TBSP_USED_SIZE_KB) as DATABASE_SIZE from sysibmadm.TBSP_UTILIZATION"
