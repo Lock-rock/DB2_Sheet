@@ -7,7 +7,7 @@ ORDER BY TABNAME;
 
 Example:
 RUNSTATS ON TABLE MYSCHEMA.TABLE1 WITH DISTRIBUTION AND DETAILED INDEXES ALL;
-
+========================================================================================================================================
 create script for runstat on all table in database:
 $ cat runstats11.sh
 #!/bin/bash
@@ -42,3 +42,22 @@ done ###made by Lock
 
 # Terminate the database connection
 db2 terminate
+=========================================================================================================================================
+
+Check the column STATS_TIME in the table syscat.table to get when was executed the last runstats
+
+
+TABLE NAME: TABLE_X
+SCHEMA NAME: SCHEMA_X
+
+
+Checking  when was executed the last runstats for all tables in a specific schema
+ db2 "select substr(tabname,1,30), STATS_TIME from syscat.tables where tabschema='SCHEMA_X'"
+
+
+Checking  when was executed the last runstats in a specific table
+ db2 "select substr(tabname,1,30), STATS_TIME from syscat.tables where tabname='TABLE_X'"
+
+
+Checking  when was executed the last runstats for all tables in the whole database
+db2 "select substr(tabname,1,30), STATS_TIME from syscat.tables
