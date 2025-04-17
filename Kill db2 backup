@@ -1,0 +1,59 @@
+Running Backup Kill in DB2:-
+
+find backup agent id:-
+db2 list applications show detail | grep -i backup
+db2top U
+
+kill agen id:
+db2 "force application (39777)"
+
+Other option:-
+
+db2top U
+copy bakup agent id
+press l
+press a
+paste agent id
+
+check application name(db2bp) and collect appl. handle id.
+Auth Id  Application    Appl.      Application Id                                                 DB       # of
+         Name           Handle                                                                    Name    Agents
+-------- -------------- ---------- -------------------------------------------------------------- -------- -----
+SADMIN   siebmtshmw.exe 31171      10.10.1.193.61020.211015132937                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 21671      10.10.1.155.43550.211013035842                                 SBLDEVDB 1
+DB2IUSR  db2bp          31467      *LOCAL.db2iusr.211014135034                                    SBLDEVDB 5
+DEVTEAM  db2jcc_applica 39888      10.10.1.155.42272.211013035706                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39763      10.10.1.155.42278.211013035709                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56763      10.10.1.205.46895.211004064535                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56809      10.10.1.205.47135.211004064617                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39934      10.10.1.155.42918.211013035757                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39605      10.10.1.155.41826.211013035624                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56776      10.10.1.205.46958.211004064548                                 SBLDEVDB 1
+SADMIN   siebmtshmw     27276      10.10.2.41.47686.211015110112                                  SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39901      10.10.1.155.42540.211013035720                                 SBLDEVDB 1
+SADMIN   siebmtsh.exe   31151      10.10.1.193.60989.211015132934                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39947      10.10.1.155.43250.211013035823                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56822      10.10.1.205.47197.211004064631                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39868      10.10.1.155.42172.211013035651                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39743      10.10.1.155.43560.211013035847                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39914      10.10.1.155.42624.211013035731                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56789      10.10.1.205.47018.211004064559                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39960      10.10.1.155.43208.211013035810                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 38960      10.10.1.155.42022.211013035642                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39881      10.10.1.155.42260.211013035700                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56756      10.10.1.205.46839.211004064530                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56802      10.10.1.205.47078.211004064610                                 SBLDEVDB 1
+SADMIN   siebmtshmw     26927      10.10.2.41.47683.211015110109                                  SBLDEVDB 1
+SADMIN   siebmtsh       21927      10.10.2.41.46653.211015074525                                  SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39927      10.10.1.155.42768.211013035743                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39848      10.10.1.155.43400.211013035837                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56769      10.10.1.205.46956.211004064546                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39894      10.10.1.155.42382.211013035712                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39940      10.10.1.155.42792.211013035749                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39565      10.10.1.155.41714.211013035618                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56815      10.10.1.205.47139.211004064622                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39861      10.10.1.155.42026.211013035644                                 SBLDEVDB 1
+SADMIN   siebprocmw.exe 31157      10.10.1.193.60998.211015132933                                 SBLDEVDB 1
+DEVTEAM  db2jcc_applica 56782      10.10.1.205.46963.211004064553                                 SBLDEVDB 1
+SADMIN   siebmtshmw     21953      10.10.2.41.46700.211015074527                                  SBLDEVDB 1
+DEVTEAM  db2jcc_applica 39953      10.10.1.155.43212.211013035812                                 SBLDEVDB 1
