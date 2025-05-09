@@ -1,0 +1,5 @@
+Check the db2 instance memory check:
+db2 get dbm cfg |grep -i instance
+
+check the db level memory :
+db2 get db cfg for sblprddb |grep -i memory
