@@ -1,11 +1,17 @@
+Full backupn in db2:
+
 date | tee -a online_sbldevdb.out
 . /home/db2iusr/sqllib/db2profile
 db2 backup db sbldevdb online to /backup/full/new_backup_image/online_backup_image WITH 8 BUFFERS BUFFER 4098 PARALLELISM 4 COMPRESS INCLUDE LOGS | tee -a online_sbldevdb.out
 date | tee -a online_sbldevdb.out
 
+Incremental backup in db2:
 
-
-date | tee -a online_ITGI.out
-. /home/db2inst3/sqllib/db2profile
-db2 backup db ITGI online to /backup/full/new_backup_image/online_backup_image WITH 8 BUFFERS BUFFER 4098 PARALLELISM 4 COMPRESS INCLUDE LOGS | tee -a online_ITGI.out
-date | tee -a online_ITGI.out
+date | tee -a /backup/scripts/new_online_scripts/incr/Incr_SBLDEVDB.out
+. /home/db2iusr/sqllib/db2profile
+db2 connect to SBLDEVDB | tee -a /backup/scripts/new_online_scripts/incr/Incr_SBLDEVDB.out
+db2 commit
+echo "SBLDEVDB DATABASE INCREMENTAL BACKUP START,,,,,,,,,,,,,"
+db2 BACKUP DATABASE SBLDEVDB online INCREMENTAL TO /backup/incr_backup_image compress include logs | tee -a /backup/scripts/new_online_scripts/incr/Incr_SBLDEVDB.out
+date | tee -a /backup/scripts/new_online_scripts/incr/Incr_SBLDEVDB.out
+echo "backup has been completed,,,,,,,,,,,,,"
