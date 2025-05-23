@@ -18,4 +18,4 @@ Schema Size
 db2 "select ((select sum(fpages*pagesize) from syscat.tablespaces as a, syscat.tables as b where a.TBSPACEID=b.TBSPACEID and tabschema='<schema_name>' group by tabschema)+(select sum(nleaf*pagesize) from syscat.tablespaces as a, syscat.indexes as b where a.TBSPACEID=b.TBSPACEID and tabschema='<schema_name>' group by tabschema))/1024 as SCHEMA_SIZE_KB from sysibm.sysdummy1"
 
 Database Size
-db2 "select sum(TBSP_USED_SIZE_KB) as DATABASE_SIZE from sysibmadm.TBSP_UTILIZATION"
+db2 "SELECT SUM(TBSP_USED_SIZE_KB) / (1024 * 1024) AS DATABASE_SIZE_GB FROM SYSIBMADM.TBSP_UTILIZATION"
