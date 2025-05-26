@@ -89,7 +89,7 @@ nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I SOLIXDB &
 
 
 
-*********************************************
+****************Start on primary server*****************************
 
 nohup /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmts64 -I SBLPRDDB &
 
@@ -98,7 +98,7 @@ nohup /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin
 
 
 
-stop
+****************stop on target server*****************************
 
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmendreplication -I SBLPRDDB -c -A
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmshutdown -I SBLPRDDB -c
