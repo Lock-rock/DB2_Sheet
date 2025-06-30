@@ -99,6 +99,11 @@ Note:
 1. Hostname of the HADR pair cannot be the same on both the servers.
 2. The instance name and the underlying userid on UNIX systems can be different.  Make sure to update the correct name of the instance for the db cfg parameter HADR_REMOTE_INST to the correct value.
 
+db2 get dbm cfg |grep -i svcename
+
+vi /etc/services
+db2c_db2inst2  50002/tcp # DB2 Nermarine connection service port
+
 
 
 
