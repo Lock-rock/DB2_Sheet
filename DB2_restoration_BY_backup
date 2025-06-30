@@ -15,3 +15,88 @@ db2 -tvf SBLPRDDB_restore.clp
 db2 rollforward db sbluatdb to end of logs and stop
 
 db2 "rollforward database SBLUATDB to end of logs and stop overflow log path (/archivelog/db2iusr/archlogs/)"
+
+
+=========================================================================================================================================================================================================
+BIPDB.0.bipinst1.DBPART000.20230510040551.001
+
+
+
+db2 "restore db SBLPRDDB from /bkptest/full taken at 20240308172412 redirect generate script /bkptest/full/restore.clp"
+
+
+db2 restore database SBLPRDDB from /bkptest/full taken at 20240308172412
+
+db2 rollforward db BIPDB one to end of logs and stop  
+
+vi resotration.sh
+
+db2 -tvf restore.sql
+
+
+db2 restore database RAWAT redirect generate script restore.clp
+
+db2 -tvf restore.sql
+
+database mydb from /tmp taken at 20151007243030 to new_ip_location into diff_name_db redirect without prompting
+
+
+
+===============================================================================================================================================================
+First create database:
+db2 create database <database_name>
+
+Then create clip file:
+db2 "restore db SBLPRDDB from /bkptest/full taken at 20240308172412 redirect generate script /bkptest/full/restore.clp"
+
+and change in clip file : name of database and pallerisum etc.
+
+and make a .sh file of clp file.
+
+./file_name.sh
+
+===============================================================================================================================================================
+
+db2 rollforward db SBLRIDIT query status
+db2 "rollforward db SBLRIDIT to end of backup and complete"
+db2 "rollforward db SBLRIDIT to end of backup and stop"
+S0583149.LOG
+
+db2 "rollforward db SBLRIDIT to end of logs and stop"
+
+
+09206983945
+
+
+db2 "rollforward db SBLRIDIT
+
+
+===============================================================================================================================================================
+db2 "rollforward db SBLRIDIT to end of logs and abort"
+
+
+db2 rollforward db SBLRIDIT query status
+db2 "rollforward db SBLRIDIT to end of backup and complete"
+db2 "rollforward db SBLRIDIT to end of backup and stop"
+S0583149.LOG
+
+db2 "rollforward db SBLRIDIT to end of logs and stop"
+
+db2 "rollforward database SBLRIDIT to end of logs and complete overflow log path ('/arclog/text/')"
+
+/actlog/db2iusr/NODE0000/LOGSTREAM0000/NODE0000/LOGSTREAM0000/09206983945
+
+db2 activate db sblridit
+
+db2pd -utilities -repeat 3
+
+db2 get db cfg for sblridit |grep -i log
+
+db2 "update db cfg for SBLRIDIT using NEWLOGPATH /actlog"
+
+db2 get db cfg for sblridit |grep -i log
+
+db2 "update db cfg for sblridit using LOGFILSIZ 65536"
+db2 list tablespaces show detail |grep -i state
+db2 get dbm cfg |grep -i svc
+
