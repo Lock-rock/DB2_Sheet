@@ -1,0 +1,33 @@
+Views:
+
+SYSIBMADM.APPLICATIONS: Provides information about active applications (sessions) connected to the database.
+SYSIBMADM.BUFFERPOOLS: Contains information about buffer pools and their usage.
+SYSIBMADM.DB_MEMORY: Provides information about memory usage by the database.
+SYSIBMADM.DBMCFG: Contains database manager configuration parameters.
+SYSIBMADM.LOCKS: Displays information about locks held by applications.
+SYSIBMADM.TABLESPACESTATS: Contains statistics for each table space in the database.
+Tables:
+
+SYSIBMADM.MON_FORMATS: Contains format codes used by monitor tables.
+SYSIBMADM.MON_LOCKWAITS: Contains information about lock wait events.
+SYSIBMADM.MON_GET_CONNECTION: Provides information about current connections to the database.
+SYSIBMADM.MON_GET_PKG_CACHE_STMT: Contains information about statements in the package cache.
+SYSIBMADM.MON_TABLESPACE: Provides information about table space usage.
+These views and tables can be queried to retrieve information about the current state and activity of the Db2 database system. Keep in mind that querying objects in the SYSIBMADM schema may require appropriate permissions, and the specific objects available may vary depending on the version and edition of Db2 you are using.
+
+
+The SYSCAT schema in IBM Db2 contains system catalog views and tables that provide metadata about the database objects and configuration settings. It serves as a catalog or repository of information about the database schema, tables, indexes, views, and more.
+Here are some commonly used objects in the SYSCAT schema:
+
+Views:
+
+syscat.TABLES: Contains information about tables defined in the database, such as their names, schema, creation time, and table type.
+syscat.COLUMNS: Provides details about columns in the tables, including their names, data types, lengths, and positions.
+syscat.INDEXES: Contains information about indexes defined on tables, including index names, table names, and column names.
+syscat.VIEWS: Provides details about views defined in the database, such as view names, view definitions, and creation time.
+Tables:
+
+syscat.TABLESPACES: Contains information about table spaces defined in the database, including their names, types, and storage details.
+syscat.INDEXES: Similar to the INDEXES view but in table format, providing more detailed information about indexes.
+syscat.ROUTINES: Contains details about user-defined functions (UDFs), stored procedures, and triggers defined in the database.
+These views and tables in the SYSCAT schema can be queried to retrieve metadata about the database objects and configuration settings. They provide valuable information for tasks such as database administration, performance tuning, and application development. Keep in mind that querying objects in the SYSCAT schema may require appropriate permissions, and the specific objects available may vary depending on the version and edition of Db2 you are using.
