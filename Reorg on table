@@ -1,0 +1,14 @@
+Run reorg on table:
+db2 "reorg table table_name"
+
+check Reorg Pending state:
+
+=============================================================================================================
+=																										                                                      	=
+=	perform the command below to find out what tables are in REORG PENDING						                  			=
+=	db2 " select TABSCHEMA, TABNAME from SYSIBMADM.ADMINTABINFO where REORG_PENDING = 'Y'"					          =
+=	if do you want to generate a script to reorg all tables in reorg peding, execute the statement below:	    =
+=																									                                                      		=
+=	db2 -x "select 'reorg table', substr(rtrim(TABSCHEMA)||'.'||rtrim(TABNAME),1,20), ';' 				          	=
+=	from SYSIBMADM.ADMINTABINFO where REORG_PENDING = 'Y'" 					                          								=
+=============================================================================================================
