@@ -1,0 +1,43 @@
+Find user and grants:
+
+select authid as username,
+       case bindaddauth when 'Y' then 1 else 0 end as bindadd,
+       case connectauth  when 'Y' then 1 else 0 end as connect,
+       case createtabauth when 'Y' then 1 else 0 end as create_tab,
+       case dbadmauth when 'Y' then 1 else 0 end as dbadm,
+       case externalroutineauth  when 'Y' then 1 else 0 end as ext_routine,
+       case implschemaauth when 'Y' then 1 else 0 end as implschema,  
+       case loadauth when 'Y' then 1 else 0 end as load,
+       case nofenceauth when 'Y' then 1 else 0 end as nofence,
+       case quiesceconnectauth when 'Y' then 1 else 0 end as quiesceconn,
+       case securityadmauth when 'Y' then 1 else 0 end as securityadm,
+       case sqladmauth when 'Y' then 1 else 0 end as sqladm,
+       case wlmadmauth when 'Y' then 1 else 0 end as wlmadm,
+       case explainauth when 'Y' then 1 else 0 end as explain,
+       case dataaccessauth when 'Y' then 1 else 0 end as dataaccess,
+       case accessctrlauth when 'Y' then 1 else 0 end as accessctrl,
+       case createsecureauth when 'Y' then 1 else 0 end as createsecure 
+from sysibmadm.authorizationids a
+left join syscat.dbauth d
+          on d.grantee = a.authid
+where authidtype = 'U'
+order by username;
+
+Columns
+usename - user name
+bindadd - indicate if user held privilage to create new packages in the database
+connect - indicate if user held privilage to connect to the database
+create_tab - indicate if user held privilage to create tables
+dbadm - indicate if user held DBADM authority
+ext_routine - indicate if user held authority to create external routines
+implschema - indicate if user held authority to implicitly create schemas by creating objects in non-existent schemas.
+load - indicate if user held authority to use the database load utility.
+nofence - indicate if user held authority to create non-fenced user-defined functions
+quiesceconn - indicate if user held authority to access the database when it is quiesced
+securityadm - indicate if user held authority to administer database security
+sqladm - indicate if user held authority to monitor and tune SQL statements
+wlmadm - indicate if user held authority to manage WLM objects
+explain - indicate if user held authority to explain SQL statements without requiring actual privileges on the objects in the statement
+dataaccess - indicate if user held authority to access data
+accessctrl - indicate if user held privilage to grant and revoke privilages
+createsecure - indicate if user held authority to create secure objects
