@@ -1,4 +1,4 @@
-SBLUAT DB Restoration on 10.10.2.182
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SBLUAT DB Restoration on IP >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 root
 Itgi@123456
 
@@ -21,46 +21,39 @@ passwd db2fenc1
 
 useradd -d /db2/home/db2iusr db2iusr
 passwd db2iusr
+
 #db2/iusr#
 
-
 cat /etc/group
-
 
 chown db2fenc1:staff /db2/home/db2fenc1
 chown db2iusr:staff /db2/home/db2iusr
 
-
 go to cd /db2/IBM/db2/V10.5/instance
 
 ./db2icrt -u db2fenc1 db2iusr
- Total number of tasks to be performed: 4
 
+Total number of tasks to be performed: 4
 
 db2start
 
 db2 list db directory
 
-
-
 chown db2iusr:staff /backup
+
 cd backup
 chown db2iusr:staff *
 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>login with db2iusr user>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
->>>>>>>>>>>>>>>>>>login with db2iusr user
 su - db2iusr
 #db2/iusr#
-
 
 whoami
 
 id
 
-
 db2 "restore db SBLPRDDB from /backup/fullbkp taken at xxxxxxxxxxxxxxxxxxxx redirect generate script /backup/fullbkp/restore.clp"
-
-
 
 mkdir -p /data1/activelog/db2iusr/NODE0000/LOGSTREAM0000/
  
@@ -798,8 +791,8 @@ db2 get dbm cfg|grep -i TCP/IP >>> set port for toad and client connections
 
 update database manager configuration using svcename 60000
 db2stop
-db2start
 
+db2start
 
 db2 get dbm cfg|grep -i TCP/IP
 
@@ -812,23 +805,18 @@ try to make connection using TOAD
 
 
 
-################################################################################################################################################################################################################
-AFTER RESOTRATION done we get below error >>>
-
-
+############################################################################################AFTER RESOTRATION done we get below error ################################################################################
 $ db2 connect to SBLUATDB
 SQL1117N  A connection to or activation of database "SBLUATDB" cannot be made
 because of ROLL-FORWARD PENDING.  SQLSTATE=57019
-
 
 $ db2set -all
 [g] DB2SYSTEM=crm_uatdb
 [g] DB2INSTDEF=db2iusr
 
-
 $ db2 "rollforward db SBLUATDB query status"
 
-                                 Rollforward Status
+                        Rollforward Status
 
  Input database alias                   = SBLUATDB
  Number of members have returned status = 1
@@ -1023,20 +1011,13 @@ $ db2 get db cfg for SBLUATDB
  Procedural language stack trace        (PL_STACK_TRACE) = NONE
 
 
-
-
-
-
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>I Changed OVERFLOWLOGPATH & LOGARCHMETH1 location as in our new server "archlog" mount point is not exists its name is "acrhivelog"
- 
-
-
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>I Changed OVERFLOWLOGPATH & LOGARCHMETH1 location as in our new server "archlog" mount point is not exists its name is "acrhivelog" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 $ mkdir -p /archivelog/overflow
 $ mkdir -p /archivelog/db2iusr/archlogs
 
 $ db2 "update db cfg for SBLUATDB using OVERFLOWLOGPATH '/archivelog/overflow'"
 DB20000I  The UPDATE DATABASE CONFIGURATION command completed successfully.
-$
+
 $
 $ mkdir -p /archivelog/db2iusr/archlogs
 $
@@ -1053,7 +1034,7 @@ $ db2start
 SQL1063N  DB2START processing was successful.
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>then copy logs from production to new UAT server, For testing I only copied 4 logs
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>then copy logs from production to new UAT server, For testing I only copied 4 logs >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 S0513248.LOG
 S0513249.LOG
 S0513250.LOG
@@ -1108,12 +1089,8 @@ SQL1273N  An operation reading the logs on database "SBLUATDB" cannot continue
 because of a missing log file "S0513999.LOG" on database partition "0" and log
 stream "0".
 
-######################################### Now its thorwing error of log "S0513999.LOG"
 
-
-$
-$
-$
+######################################### Now its thorwing error of log "S0513999.LOG" #########################################
 $ db2 "rollforward database SBLUATDB to end of logs and stop overflow log path (/archivelog/db2iusr/archlogs/)"
 
                                  Rollforward Status
@@ -1133,7 +1110,7 @@ $ db2 activate db sbluatdb
 DB20000I  The ACTIVATE DATABASE command completed successfully.
 
 
-################################db is working fine and now make TCP/IP connection for outside users.
+################################################################  db is working fine and now make TCP/IP connection for outside users. ################################################################################################ 
 
 $ cat /etc/hosts
 10.10.2.182     crm_uatdb
@@ -1154,8 +1131,11 @@ $ db2 connect to sbluatdb
  SQL authorization ID   = DB2IUSR
  Local database alias   = SBLUATDB
 
+
+$ cat /etc/services
+
 $  db2 get dbm cfg|grep -i TCP/IP
- TCP/IP Service name                          (SVCENAME) = 60000
+  TCP/IP Service name                          (SVCENAME) = 60000
 
 $
 
@@ -1170,7 +1150,7 @@ $ db2set -all
 [g] DB2SYSTEM=crm_uatdb
 [g] DB2INSTDEF=db2iusr
 
-###################### restart the db >>>>>>>>
+######################################################################################## restart the db ##############################################################################################################
 
 $ db2 force application all;
 DB20000I  The FORCE APPLICATION command completed successfully.
@@ -1188,6 +1168,6 @@ $ db2start
 SQL1063N  DB2START processing was successful.
 
 
-################ make connection in TOAD and connect.
+################ make connection in TOAD and connect. ######################
 
 
