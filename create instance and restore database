@@ -1,0 +1,1193 @@
+SBLUAT DB Restoration on 10.10.2.182
+root
+Itgi@123456
+
+copy the DB2 software from 10.10.1.199 >>>  /db2/media/DB2_Svr_10.5.0.3_AIX.tar
+
+hostname
+
+cat /etc/hosts
+
+/u01/IBM/db2/V10.5/bin/db2val
+
+db2licm -l
+
+mkdir -p /db2/home/db2fenc1
+mkdir -p /db2/home/db2iusr
+
+
+useradd -d /db2/home/db2fenc1 db2fenc1
+passwd db2fenc1
+
+useradd -d /db2/home/db2iusr db2iusr
+passwd db2iusr
+#db2/iusr#
+
+
+cat /etc/group
+
+
+chown db2fenc1:staff /db2/home/db2fenc1
+chown db2iusr:staff /db2/home/db2iusr
+
+
+go to cd /db2/IBM/db2/V10.5/instance
+
+./db2icrt -u db2fenc1 db2iusr
+ Total number of tasks to be performed: 4
+
+
+db2start
+
+db2 list db directory
+
+
+
+chown db2iusr:staff /backup
+cd backup
+chown db2iusr:staff *
+
+
+>>>>>>>>>>>>>>>>>>login with db2iusr user
+su - db2iusr
+#db2/iusr#
+
+
+whoami
+
+id
+
+
+db2 "restore db SBLPRDDB from /backup/fullbkp taken at xxxxxxxxxxxxxxxxxxxx redirect generate script /backup/fullbkp/restore.clp"
+
+
+
+mkdir -p /data1/activelog/db2iusr/NODE0000/LOGSTREAM0000/
+ 
+mkdir -p /data1/tempspace/
+mkdir -p /data2/tempspace/
+mkdir -p /data3/tempspace/
+mkdir -P /data1/userspace/
+mkdir -P /data2/userspace/
+mkdir -P /data3/userspace/
+
+mkdir -P /data2/sys/systool/
+mkdir -P /data1/sys/systool/
+mkdir -P /data3/sys/systool/
+
+mkdir -p /data1/temp_16k/
+mkdir -p /data2/temp_16k/
+mkdir -p /data3/temp_16k/
+
+mkdir -p /data1/temp_32k/
+mkdir -p /data2/temp_32k/
+mkdir -p /data3/temp_32k/
+
+mkdir -p /data1/sys/systemp1/
+mkdir -p /data2/sys/systemp1/
+mkdir -p /data3/sys/systemp1/
+
+mkdir -p /data1/sbluatdb/
+mkdir -p /data2/sbluatdb/
+mkdir -p /data3/sbluatdb/
+
+
+
+cat restore.clp
+
+
+-- *****************************************************************************
+-- ** automatically created redirect restore script
+-- *****************************************************************************
+UPDATE COMMAND OPTIONS USING S ON Z ON SBLUATDB_NODE0000.out V ON;
+SET CLIENT ATTACH_MEMBER  0;
+SET CLIENT CONNECT_MEMBER 0;
+-- *****************************************************************************
+-- ** automatically created redirect restore script
+-- *****************************************************************************
+RESTORE DATABASE SBLPRDDB
+-- USER  <username>
+-- USING '<password>'
+FROM '/backup/sblbackup/fullbackup'
+TAKEN AT 20220708233028
+-- ON '/data3/sbluatdb'
+-- ,  '/data2/sbluatdb'
+-- ,  '/data1/sbluatdb'
+ON '/data1','/data2','/data3'
+INTO SBLUATDB
+-- LOGTARGET '<directory>'
+-- NEWLOGPATH '/activelog/db2iusr/sbluatdb/NODE0000/LOGSTREAM0000/'
+-- WITH <num-buff> BUFFERS
+-- BUFFER <buffer-size>
+-- REPLACE HISTORY FILE
+--REPLACE EXISTING
+REDIRECT
+-- PARALLELISM <n>
+-- COMPRLIB '<lib-name>'
+-- COMPROPTS '<options-string>'
+-- WITHOUT ROLLING FORWARD
+-- WITHOUT PROMPTING
+;
+-- *****************************************************************************
+-- ** storage group definition
+-- **   Default storage group ID                 = 0
+-- **   Number of storage groups                 = 1
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Storage group name                         = StorageGroup1
+-- **   Storage group ID                         = 0
+-- **   Data tag                                 = None
+-- *****************************************************************************
+-- SET STOGROUP PATHS FOR StorageGroup1
+-- ON '/data3/sbluatdb'
+-- ,  '/data2/sbluatdb'
+-- ,  '/data1/sbluatdb'
+-- ;
+-- *****************************************************************************
+-- ** table space definition
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = SYSCATSPACE
+-- **   Tablespace ID                            = 0
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = All permanent data. Regular table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 694206
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 0
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data1/sbluatdb/sys/syscat'
+, PATH   '/data2/sbluatdb/sys/syscat'
+, PATH   '/data3/sbluatdb/sys/syscat'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = TEMPSPACE1
+-- **   Tablespace ID                            = 1
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = System Temporary data
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 3
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 1
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data1/sbluatdb/tempspace'
+, PATH   '/data2/sbluatdb/tempspace'
+, PATH   '/data3/sbluatdb/tempspace'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = USERSPACE1
+-- **   Tablespace ID                            = 2
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = All permanent data. Regular table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 1567213
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 2
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data1/sbluatdb/userspace'
+, PATH   '/data2/sbluatdb/userspace'
+, PATH   '/data3/sbluatdb/userspace'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = SYSTOOLSPACE
+-- **   Tablespace ID                            = 3
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = All permanent data. Regular table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 13096
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 3
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data2/sbluatdb/sys/systool'
+, PATH   '/data1/sbluatdb/sys/systool'
+, PATH   '/data3/sbluatdb/sys/systool'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = TMP_16K
+-- **   Tablespace ID                            = 4
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = System Temporary data
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 3
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 4
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data1/sbluatdb/temp_16k'
+, PATH   '/data2/sbluatdb/temp_16k'
+, PATH   '/data3/sbluatdb/temp_16k'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = TMP_32K
+-- **   Tablespace ID                            = 5
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = System Temporary data
+-- **   Tablespace Page size (bytes)             = 32768
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 3
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 5
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data1/sbluatdb/temp_32k'
+, PATH   '/data2/sbluatdb/temp_32k'
+, PATH   '/data3/sbluatdb/temp_32k'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = INDX
+-- **   Tablespace ID                            = 6
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 212461596
+-- **   Number of usable pages                   = 212461584
+-- **   High water mark (pages)                  = 212160172
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = EIM_4K
+-- **   Tablespace ID                            = 7
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 936996
+-- **   Number of usable pages                   = 936984
+-- **   High water mark (pages)                  = 488744
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = EIM_16K
+-- **   Tablespace ID                            = 8
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 1329756
+-- **   Number of usable pages                   = 1329744
+-- **   High water mark (pages)                  = 1278744
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = EIM_32K
+-- **   Tablespace ID                            = 9
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 32768
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 586668
+-- **   Number of usable pages                   = 586656
+-- **   High water mark (pages)                  = 581428
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA_4K
+-- **   Tablespace ID                            = 10
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 133258452
+-- **   Number of usable pages                   = 133258440
+-- **   High water mark (pages)                  = 133250844
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA_16K
+-- **   Tablespace ID                            = 11
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 21297972
+-- **   Number of usable pages                   = 21297960
+-- **   High water mark (pages)                  = 21296416
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NDATA1_4K
+-- **   Tablespace ID                            = 12
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 56910144
+-- **   Number of usable pages                   = 56909952
+-- **   High water mark (pages)                  = 56747392
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = REP_4K
+-- **   Tablespace ID                            = 13
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 28538628
+-- **   Number of usable pages                   = 28538616
+-- **   High water mark (pages)                  = 28341016
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = REP_16K
+-- **   Tablespace ID                            = 14
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 475596
+-- **   Number of usable pages                   = 475584
+-- **   High water mark (pages)                  = 361332
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = REP_32K
+-- **   Tablespace ID                            = 15
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 32768
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 36
+-- **   Number of usable pages                   = 24
+-- **   High water mark (pages)                  = 12
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = SYSTOOLSTMPSPACE
+-- **   Tablespace ID                            = 16
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = User Temporary data
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = No
+-- **   Total number of pages                    = 3
+-- *****************************************************************************
+SET TABLESPACE CONTAINERS FOR 16
+-- IGNORE ROLLFORWARD CONTAINER OPERATIONS
+USING (
+  PATH   '/data1/sbluatdb/sys/systemp1'
+, PATH   '/data2/sbluatdb/sys/systemp1'
+, PATH   '/data3/sbluatdb/sys/systemp1'
+);
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA1_4K
+-- **   Tablespace ID                            = 17
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 72471396
+-- **   Number of usable pages                   = 72471384
+-- **   High water mark (pages)                  = 72467676
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = INDX1
+-- **   Tablespace ID                            = 18
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 31131636
+-- **   Number of usable pages                   = 31131624
+-- **   High water mark (pages)                  = 30662860
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = INDX_16K
+-- **   Tablespace ID                            = 19
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 16
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 4570800
+-- **   Number of usable pages                   = 4570752
+-- **   High water mark (pages)                  = 4569344
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA_32K
+-- **   Tablespace ID                            = 20
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 32768
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 787296
+-- **   Number of usable pages                   = 787200
+-- **   High water mark (pages)                  = 732416
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NINDX_32K
+-- **   Tablespace ID                            = 21
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 32768
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 23328
+-- **   Number of usable pages                   = 23232
+-- **   High water mark (pages)                  = 23072
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NDATA_4K
+-- **   Tablespace ID                            = 22
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 129521472
+-- **   Number of usable pages                   = 129521280
+-- **   High water mark (pages)                  = 129141440
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NDATA_16K
+-- **   Tablespace ID                            = 23
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 20927808
+-- **   Number of usable pages                   = 20927616
+-- **   High water mark (pages)                  = 20925440
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NINDX_4K
+-- **   Tablespace ID                            = 24
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 177154752
+-- **   Number of usable pages                   = 177154560
+-- **   High water mark (pages)                  = 176761152
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NINDX_16K
+-- **   Tablespace ID                            = 25
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 6955200
+-- **   Number of usable pages                   = 6955008
+-- **   High water mark (pages)                  = 6952832
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NDATA1_16K
+-- **   Tablespace ID                            = 26
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 11184960
+-- **   Number of usable pages                   = 11184768
+-- **   High water mark (pages)                  = 11071296
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NDATA2_16K
+-- **   Tablespace ID                            = 27
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 7746276
+-- **   Number of usable pages                   = 7746264
+-- **   High water mark (pages)                  = 41976
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NINDX2_16K
+-- **   Tablespace ID                            = 28
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 25164252
+-- **   Number of usable pages                   = 25164240
+-- **   High water mark (pages)                  = 24369808
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NDATA2_4K
+-- **   Tablespace ID                            = 29
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 54036288
+-- **   Number of usable pages                   = 54036096
+-- **   High water mark (pages)                  = 53608128
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = NINDX1_4K
+-- **   Tablespace ID                            = 30
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 64
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 8098368
+-- **   Number of usable pages                   = 8098176
+-- **   High water mark (pages)                  = 8029760
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = INDX105_4K
+-- **   Tablespace ID                            = 31
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = -1
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 71222464
+-- **   Number of usable pages                   = 71222400
+-- **   High water mark (pages)                  = 71179520
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA105_16K
+-- **   Tablespace ID                            = 32
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 16384
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = -1
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 28036096
+-- **   Number of usable pages                   = 28036032
+-- **   High water mark (pages)                  = 27981792
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA105_4K
+-- **   Tablespace ID                            = 33
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = -1
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 1195104
+-- **   Number of usable pages                   = 1195008
+-- **   High water mark (pages)                  = 870880
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = OPM105_4K
+-- **   Tablespace ID                            = 34
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = -1
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 288
+-- **   Number of usable pages                   = 192
+-- **   High water mark (pages)                  = 96
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = 28SEP_INDX
+-- **   Tablespace ID                            = 35
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 5278716
+-- **   Number of usable pages                   = 5278704
+-- **   High water mark (pages)                  = 12
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = 28SEP_DATA_4K
+-- **   Tablespace ID                            = 36
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 4
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = None
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 4353924
+-- **   Number of usable pages                   = 4353912
+-- **   High water mark (pages)                  = 12
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DB2MONTMPTBSP
+-- **   Tablespace ID                            = 37
+-- **   Tablespace Type                          = System managed space
+-- **   Tablespace Content Type                  = User Temporary data
+-- **   Tablespace Page size (bytes)             = 4096
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Total number of pages                    = 3
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** Tablespace name                            = DATA1_8K
+-- **   Tablespace ID                            = 38
+-- **   Tablespace Type                          = Database managed space
+-- **   Tablespace Content Type                  = All permanent data. Large table space.
+-- **   Tablespace Page size (bytes)             = 8192
+-- **   Tablespace Extent size (pages)           = 32
+-- **   Using automatic storage                  = Yes
+-- **   Storage group ID                         = 0
+-- **   Source storage group ID                  = -1
+-- **   Data tag                                 = -1
+-- **   Auto-resize enabled                      = Yes
+-- **   Total number of pages                    = 14829664
+-- **   Number of usable pages                   = 14829568
+-- **   High water mark (pages)                  = 14825760
+-- *****************************************************************************
+-- *****************************************************************************
+-- ** start redirected restore
+-- *****************************************************************************
+RESTORE DATABASE SBLUATDB CONTINUE;
+-- *****************************************************************************
+-- ** end of file
+-- *****************************************************************************
+
+
+db2 connect to sbluatdb
+db2 LIST TABLESPACES show detail
+
+
+cat /etc/services
+cat /etc/hosts
+db2 get db cfg for SBLUATDB | grep -i logindex
+
+db2 get db cfg for SBLUATDB
+db2 get dbm cfg
+
+
+db2 get dbm cfg|grep -i port
+
+db2 get dbm cfg|grep -i TCP/IP >>> set port for toad and client connections
+
+update database manager configuration using svcename 60000
+db2stop
+db2start
+
+
+db2 get dbm cfg|grep -i TCP/IP
+
+
+netstat -an
+db2set
+
+
+try to make connection using TOAD 
+
+
+
+################################################################################################################################################################################################################
+AFTER RESOTRATION done we get below error >>>
+
+
+$ db2 connect to SBLUATDB
+SQL1117N  A connection to or activation of database "SBLUATDB" cannot be made
+because of ROLL-FORWARD PENDING.  SQLSTATE=57019
+
+
+$ db2set -all
+[g] DB2SYSTEM=crm_uatdb
+[g] DB2INSTDEF=db2iusr
+
+
+$ db2 "rollforward db SBLUATDB query status"
+
+                                 Rollforward Status
+
+ Input database alias                   = SBLUATDB
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = DB  pending
+ Next log file to be read               = S0513248.LOG
+ Log files processed                    =  -
+ Last committed transaction             = 2023-02-04-01.46.49.000000 UTC
+ 
+
+$ db2 get db cfg for SBLUATDB
+
+       Database Configuration for Database SBLUATDB
+
+ Database configuration release level                    = 0x1000
+ Database release level                                  = 0x1000
+
+ Database territory                                      = US
+ Database code page                                      = 1208
+ Database code set                                       = UTF-8
+ Database country/region code                            = 1
+ Database collating sequence                             = IDENTITY
+ Alternate collating sequence              (ALT_COLLATE) =
+ Number compatibility                                    = OFF
+ Varchar2 compatibility                                  = OFF
+ Date compatibility                                      = OFF
+ Database page size                                      = 4096
+
+ Statement concentrator                      (STMT_CONC) = OFF
+
+ Discovery support for this database       (DISCOVER_DB) = ENABLE
+
+ Restrict access                                         = NO
+ Default query optimization class         (DFT_QUERYOPT) = 5
+ Degree of parallelism                      (DFT_DEGREE) = 1
+ Continue upon arithmetic exceptions   (DFT_SQLMATHWARN) = NO
+ Default refresh age                   (DFT_REFRESH_AGE) = 0
+ Default maintained table types for opt (DFT_MTTB_TYPES) = SYSTEM
+ Number of frequent values retained     (NUM_FREQVALUES) = 10
+ Number of quantiles retained            (NUM_QUANTILES) = 20
+
+ Decimal floating point rounding mode  (DECFLT_ROUNDING) = ROUND_HALF_EVEN
+
+ Backup pending                                          = NO
+
+ All committed transactions have been written to disk    = NO
+ Rollforward pending                                     = DATABASE
+ Restore pending                                         = NO
+
+ Multi-page file allocation enabled                      = YES
+
+ Log retain for recovery status                          = NO
+ User exit for logging status                            = YES
+
+ Self tuning memory                    (SELF_TUNING_MEM) = ON
+ Size of database shared memory (4KB)  (DATABASE_MEMORY) = AUTOMATIC(911776)
+ Database memory threshold               (DB_MEM_THRESH) = 10
+ Max storage for lock list (4KB)              (LOCKLIST) = AUTOMATIC(4096)
+ Percent. of lock lists per application       (MAXLOCKS) = AUTOMATIC(97)
+ Package cache size (4KB)                   (PCKCACHESZ) = AUTOMATIC(58736)
+ Sort heap thres for shared sorts (4KB) (SHEAPTHRES_SHR) = AUTOMATIC(5000)
+ Sort list heap (4KB)                         (SORTHEAP) = AUTOMATIC(256)
+
+ Database heap (4KB)                            (DBHEAP) = AUTOMATIC(36224)
+ Catalog cache size (4KB)              (CATALOGCACHE_SZ) = 20000
+ Log buffer size (4KB)                        (LOGBUFSZ) = 20480
+ Utilities heap size (4KB)                (UTIL_HEAP_SZ) = 524288
+ SQL statement heap (4KB)                     (STMTHEAP) = 40960
+ Default application heap (4KB)             (APPLHEAPSZ) = AUTOMATIC(2000)
+ Application Memory Size (4KB)             (APPL_MEMORY) = AUTOMATIC(4000000)
+ Statistics heap size (4KB)               (STAT_HEAP_SZ) = AUTOMATIC(524288)
+
+ Interval for checking deadlock (ms)         (DLCHKTIME) = 5000
+ Lock timeout (sec)                        (LOCKTIMEOUT) = -1
+
+ Changed pages threshold                (CHNGPGS_THRESH) = 80
+ Number of asynchronous page cleaners   (NUM_IOCLEANERS) = AUTOMATIC(1)
+ Number of I/O servers                   (NUM_IOSERVERS) = 50
+ Sequential detect flag                      (SEQDETECT) = YES
+ Default prefetch size (pages)         (DFT_PREFETCH_SZ) = AUTOMATIC
+
+ Track modified pages                         (TRACKMOD) = YES
+
+ Default number of containers                            = 1
+ Default tablespace extentsize (pages)   (DFT_EXTENT_SZ) = 32
+
+ Max number of active applications            (MAXAPPLS) = AUTOMATIC(7342)
+ Average number of active applications       (AVG_APPLS) = AUTOMATIC(1)
+ Max DB files open per application            (MAXFILOP) = 61440
+
+ Log file size (4KB)                         (LOGFILSIZ) = 65536
+ Number of primary log files                (LOGPRIMARY) = 252
+ Number of secondary log files               (LOGSECOND) = 4
+ Changed path to log files                  (NEWLOGPATH) =
+ Path to log files                                       = /data1/db2iusr/NODE0000/SQL00001/LOGSTREAM0000/
+ Overflow log path                     (OVERFLOWLOGPATH) = /archlog/overflow/db2iusr/NODE0000/LOGSTREAM0000/
+ Mirror log path                         (MIRRORLOGPATH) =
+ First active log file                                   = S0513248.LOG
+ Block log on disk full                (BLK_LOG_DSK_FUL) = NO
+ Block non logged operations            (BLOCKNONLOGGED) = NO
+ Percent max primary log space by transaction  (MAX_LOG) = 0
+ Num. of active log files for 1 active UOW(NUM_LOG_SPAN) = 0
+
+ Percent log file reclaimed before soft chckpt (SOFTMAX) = 160
+ Target for oldest page in LBP       (PAGE_AGE_TRGT_MCR) = 240
+
+ HADR database role                                      = STANDARD
+ HADR local host name                  (HADR_LOCAL_HOST) = sblprddb.itgi.co.in
+ HADR local service name                (HADR_LOCAL_SVC) = 30000
+ HADR remote host name                (HADR_REMOTE_HOST) = 10.10.2.176
+ HADR remote service name              (HADR_REMOTE_SVC) = 30001
+ HADR instance name of remote server  (HADR_REMOTE_INST) = db2iusr
+ HADR timeout value                       (HADR_TIMEOUT) = 300
+ HADR target list                     (HADR_TARGET_LIST) = 10.10.2.176:30001|10.201.77.176:60000
+ HADR log write synchronization mode     (HADR_SYNCMODE) = SUPERASYNC
+ HADR spool log data limit (4KB)      (HADR_SPOOL_LIMIT) = AUTOMATIC(16777216)
+ HADR log replay delay (seconds)     (HADR_REPLAY_DELAY) = 0
+ HADR peer window duration (seconds)  (HADR_PEER_WINDOW) = 60
+
+ First log archive method                 (LOGARCHMETH1) = DISK:/archlog/
+ Archive compression for logarchmeth1    (LOGARCHCOMPR1) = OFF
+ Options for logarchmeth1                  (LOGARCHOPT1) =
+ Second log archive method                (LOGARCHMETH2) = OFF
+ Archive compression for logarchmeth2    (LOGARCHCOMPR2) = OFF
+ Options for logarchmeth2                  (LOGARCHOPT2) =
+ Failover log archive path                (FAILARCHPATH) =
+ Number of log archive retries on error   (NUMARCHRETRY) = 5
+ Log archive retry Delay (secs)         (ARCHRETRYDELAY) = 20
+ Vendor options                              (VENDOROPT) =
+
+ Auto restart enabled                      (AUTORESTART) = ON
+ Index re-creation time and redo index build  (INDEXREC) = RESTART
+ Log pages during index build            (LOGINDEXBUILD) = ON
+ Default number of loadrec sessions    (DFT_LOADREC_SES) = 1
+ Number of database backups to retain   (NUM_DB_BACKUPS) = 12
+ Recovery history retention (days)     (REC_HIS_RETENTN) = 366
+ Auto deletion of recovery objects    (AUTO_DEL_REC_OBJ) = OFF
+
+ TSM management class                    (TSM_MGMTCLASS) =
+ TSM node name                            (TSM_NODENAME) =
+ TSM owner                                   (TSM_OWNER) =
+ TSM password                             (TSM_PASSWORD) =
+
+ Automatic maintenance                      (AUTO_MAINT) = ON
+   Automatic database backup            (AUTO_DB_BACKUP) = OFF
+   Automatic table maintenance          (AUTO_TBL_MAINT) = ON
+     Automatic runstats                  (AUTO_RUNSTATS) = OFF
+       Real-time statistics            (AUTO_STMT_STATS) = OFF
+       Statistical views              (AUTO_STATS_VIEWS) = OFF
+       Automatic sampling                (AUTO_SAMPLING) = OFF
+     Automatic reorganization               (AUTO_REORG) = OFF
+
+ Auto-Revalidation                          (AUTO_REVAL) = DISABLED
+
+ Currently Committed                        (CUR_COMMIT) = ON
+ CHAR output with DECIMAL input        (DEC_TO_CHAR_FMT) = V95
+ Enable XML Character operations        (ENABLE_XMLCHAR) = YES
+ WLM Collection Interval (minutes)     (WLM_COLLECT_INT) = 0
+ Monitor Collect Settings
+ Request metrics                       (MON_REQ_METRICS) = EXTENDED
+ Activity metrics                      (MON_ACT_METRICS) = EXTENDED
+ Object metrics                        (MON_OBJ_METRICS) = EXTENDED
+ Routine data                             (MON_RTN_DATA) = BASE
+   Routine executable list            (MON_RTN_EXECLIST) = ON
+ Unit of work events                      (MON_UOW_DATA) = NONE
+   UOW events with package list        (MON_UOW_PKGLIST) = OFF
+   UOW events with executable list    (MON_UOW_EXECLIST) = OFF
+ Lock timeout events                   (MON_LOCKTIMEOUT) = WITHOUT_HIST
+ Deadlock events                          (MON_DEADLOCK) = WITHOUT_HIST
+ Lock wait events                         (MON_LOCKWAIT) = WITHOUT_HIST
+ Lock wait event threshold               (MON_LW_THRESH) = 5000000
+ Number of package list entries         (MON_PKGLIST_SZ) = 32
+ Lock event notification level         (MON_LCK_MSG_LVL) = 1
+
+ SMTP Server                               (SMTP_SERVER) =
+ SQL conditional compilation flags         (SQL_CCFLAGS) =
+ Section actuals setting               (SECTION_ACTUALS) = BASE
+ Connect procedure                        (CONNECT_PROC) =
+ Adjust temporal SYSTEM_TIME period (SYSTIME_PERIOD_ADJ) = NO
+ Log DDL Statements                      (LOG_DDL_STMTS) = NO
+ Log Application Information             (LOG_APPL_INFO) = NO
+ Default data capture on new Schemas   (DFT_SCHEMAS_DCC) = NO
+ Default table organization              (DFT_TABLE_ORG) = ROW
+ Default string units                     (STRING_UNITS) = SYSTEM
+ National character string mapping       (NCHAR_MAPPING) = GRAPHIC_CU16
+ Database is in write suspend state                      = NO
+ Extended row size support             (EXTENDED_ROW_SZ) = DISABLE
+ Encryption Library for Backup                 (ENCRLIB) =
+ Encryption Options for Backup                (ENCROPTS) =
+ Encrypted database                                      = NO
+ Procedural language stack trace        (PL_STACK_TRACE) = NONE
+
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>I Changed OVERFLOWLOGPATH & LOGARCHMETH1 location as in our new server "archlog" mount point is not exists its name is "acrhivelog"
+ 
+
+
+$ mkdir -p /archivelog/overflow
+$ mkdir -p /archivelog/db2iusr/archlogs
+
+$ db2 "update db cfg for SBLUATDB using OVERFLOWLOGPATH '/archivelog/overflow'"
+DB20000I  The UPDATE DATABASE CONFIGURATION command completed successfully.
+$
+$
+$ mkdir -p /archivelog/db2iusr/archlogs
+$
+$ db2 "update db cfg for SBLUATDB using LOGARCHMETH1 'DISK:/archivelog/db2iusr/archlogs'"
+DB20000I  The UPDATE DATABASE CONFIGURATION command completed successfully.
+
+$ db2stop
+02/10/2023 07:43:24     0   0   SQL1064N  DB2STOP processing was successful.
+SQL1064N  DB2STOP processing was successful.
+$
+$
+$ db2start
+02/10/2023 07:43:28     0   0   SQL1063N  DB2START processing was successful.
+SQL1063N  DB2START processing was successful.
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>then copy logs from production to new UAT server, For testing I only copied 4 logs
+S0513248.LOG
+S0513249.LOG
+S0513250.LOG
+S0513251.LOG
+
+##########on SBL PROD(10.10.1.199)
+scp  S0513248.LOG S0513249.LOG S0513250.LOG S0513251.LOG db2iusr@10.10.2.182:/data1/db2iusr/NODE0000/SQL00001/LOGSTREAM0000/
+
+copy these 4 logs to overflow location:
+
+cp S0513248.LOG S0513249.LOG S0513250.LOG S0513251.LOG /archivelog/overflow/NODE0000/LOGSTREAM0000/
+
+
+
+$ db2 "rollforward db SBLUATDB to end of backup and stop OVERFLOW LOG PATH ('/archivelog/overflow/NODE0000/LOGSTREAM0000/')"
+SQL1273N  An operation reading the logs on database "SBLUATDB" cannot continue
+because of a missing log file "S0513252.LOG" on database partition "0" and log
+stream "0".
+
+############ 4 logs applied as we got ealier for los "S0513248.LOG" but now we got log error "S0513252.LOG"
+
+
+then again copy logs from sequence "S0513252 to S0513999" PROD to new acrhive location of UAT server "/archivelog/db2iusr/archlogs/"
+
+
+
+db2 "rollforward database SBLUATDB to end of logs overflow log path ('/archivelog/db2iusr/archlogs/')"
+                                 Rollforward Status
+
+ Input database alias                   = SBLUATDB
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = DB  working
+ Next log file to be read               = S0513999.LOG
+ Log files processed                    = S0513248.LOG - S0513998.LOG
+ Last committed transaction             = 2023-02-07-15.52.48.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+
+
+$ db2 connect to sbluatdb
+SQL1117N  A connection to or activation of database "SBLUATDB" cannot be made
+because of ROLL-FORWARD PENDING.  SQLSTATE=57019
+
+$ db2 activate db sbluatdb
+SQL1117N  A connection to or activation of database "SBLUATDB" cannot be made
+because of ROLL-FORWARD PENDING.  SQLSTATE=57019
+
+$ db2 rollforward db sbluatdb complete
+SQL1273N  An operation reading the logs on database "SBLUATDB" cannot continue
+because of a missing log file "S0513999.LOG" on database partition "0" and log
+stream "0".
+
+######################################### Now its thorwing error of log "S0513999.LOG"
+
+
+$
+$
+$
+$ db2 "rollforward database SBLUATDB to end of logs and stop overflow log path (/archivelog/db2iusr/archlogs/)"
+
+                                 Rollforward Status
+
+ Input database alias                   = SBLUATDB
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = not pending
+ Next log file to be read               =
+ Log files processed                    = S0513248.LOG - S0513998.LOG
+ Last committed transaction             = 2023-02-07-15.52.48.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+
+$ db2 activate db sbluatdb
+DB20000I  The ACTIVATE DATABASE command completed successfully.
+
+
+################################db is working fine and now make TCP/IP connection for outside users.
+
+$ cat /etc/hosts
+10.10.2.182     crm_uatdb
+
+$ db2 get db cfg for SBLUATDB | grep -i logindex
+
+$ db2 get dbm cfg|grep -i TCP/IP  >>> o/p is none 
+
+$ db2 "update database manager configuration using svcename 60000"
+DB20000I  The UPDATE DATABASE MANAGER CONFIGURATION command completed
+successfully.
+
+$ db2 connect to sbluatdb
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = DB2IUSR
+ Local database alias   = SBLUATDB
+
+$  db2 get dbm cfg|grep -i TCP/IP
+ TCP/IP Service name                          (SVCENAME) = 60000
+
+$
+
+$ db2set -all
+[g] DB2SYSTEM=crm_uatdb
+[g] DB2INSTDEF=db2iusr
+
+$ db2set DB2COMM=tcpip
+
+$ db2set -all
+[i] DB2COMM=TCPIP
+[g] DB2SYSTEM=crm_uatdb
+[g] DB2INSTDEF=db2iusr
+
+###################### restart the db >>>>>>>>
+
+$ db2 force application all;
+DB20000I  The FORCE APPLICATION command completed successfully.
+DB21024I  This command is asynchronous and may not be effective immediately.
+
+
+$ db2stop
+02/10/2023 21:42:50     0   0   SQL1064N  DB2STOP processing was successful.
+SQL1064N  DB2STOP processing was successful.
+$
+$
+$
+$ db2start
+02/10/2023 21:43:00     0   0   SQL1063N  DB2START processing was successful.
+SQL1063N  DB2START processing was successful.
+
+
+################ make connection in TOAD and connect.
+
+
