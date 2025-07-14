@@ -1,0 +1,21 @@
+kill any application by handle ID or id:
+
+vi killid.sh
+
+past this,
+
+#!/bin/bash
+
+while true; do
+    read -p "Enter the application ID to force (or type 'exit' to quit): " id
+    if [ "$id" == "exit" ]; then
+        echo "Exiting."
+        break
+    fi
+    db2 "force applications ($id)"
+done
+
+give execute permission:
+
+chmod 775 killid.sh
+
