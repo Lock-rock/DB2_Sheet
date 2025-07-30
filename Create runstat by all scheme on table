@@ -7,6 +7,16 @@ ORDER BY TABNAME;
 
 Example:
 RUNSTATS ON TABLE MYSCHEMA.TABLE1 WITH DISTRIBUTION AND DETAILED INDEXES ALL;
+
+OR 
+
+SELECT 'RUNSTATS ON TABLE ' || TABSCHEMA || '.' || TABNAME || 
+       ' WITH DISTRIBUTION AND DETAILED INDEXES ALL;' AS RUNSTATS_COMMAND
+FROM SYSCAT.TABLES
+WHERE TYPE = 'T'
+AND TABSCHEMA NOT IN ('SYSCAT', 'SYSSTAT', 'SYSTOOLS', 'SYSPROC','SYSIBM')
+ORDER BY TABSCHEMA, TABNAME;
+
 ========================================================================================================================================
 create script for runstat on all table in database:
 $ cat runstats11.sh
