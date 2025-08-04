@@ -71,3 +71,7 @@ Checking  when was executed the last runstats in a specific table
 
 Checking  when was executed the last runstats for all tables in the whole database
 db2 "select substr(tabname,1,30), STATS_TIME from syscat.tables
+
+=========================================================================================================================================
+Delete runing runstat:
+SELECT APPLICATION_HANDLE, APPLICATION_NAME,CLIENT_WRKSTNNAME FROM TABLE(MON_GET_CONNECTION(NULL, -2)) AS T
