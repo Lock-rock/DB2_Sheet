@@ -1,0 +1,44 @@
+🔹 1. Schema-level privileges in Db2
+
+These control what a user can do with objects inside a schema:
+
+Privilege	Description
+USAGE	Allows the user to reference the schema name (basic requirement).
+CREATEIN	Allows creating objects (tables, views, indexes, etc.) in the schema.
+ALTERIN	Allows altering objects in the schema.
+DROPIN	Allows dropping objects in the schema.
+
+👉 Example:
+
+GRANT USAGE, CREATEIN, ALTERIN, DROPIN ON SCHEMA HRMS TO USER SCOTT;
+
+🔹 2. Table-level privileges in Db2
+
+These control access and modification of specific tables:
+
+Privilege	Description
+CONTROL	Full control over the table (implies all other privileges).
+ALTER	Allows altering the table structure.
+DELETE	Allows deleting rows.
+INDEX	Allows creating indexes on the table.
+INSERT	Allows inserting rows.
+REFERENCES	Allows creating foreign keys that reference this table (can be column-specific).
+SELECT	Allows reading rows.
+UPDATE	Allows updating rows (can be column-specific).
+ALL PRIVILEGES	Grants all the above privileges (except CONTROL).
+
+👉 Example:
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE HRMS.EMPLOYEES TO USER SCOTT;
+
+
+Or to give everything:
+
+GRANT ALL PRIVILEGES ON TABLE HRMS.EMPLOYEES TO USER SCOTT;
+
+
+✅ Summary
+
+Schema-level = USAGE, CREATEIN, ALTERIN, DROPIN
+
+Table-level = CONTROL, ALTER, DELETE, INDEX, INSERT, REFERENCES, SELECT, UPDATE, ALL PRIVILEGES
