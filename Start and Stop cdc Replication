@@ -1,19 +1,14 @@
 $ cat coldstart
 nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I db2mis_src &
 
-
-
 $ cat startreplication
 /db2/home/cdc/CDC/bin/bin/dmstartmirror  -I MIS_TARGET -c -A
-
 /db2/home/cdc/CDC/bin/bin/dmgetsubscriptionstatus -I MIS_TARGET -A
 
 
 $ cat stopreplication
 /db2/home/cdc/CDC/bin/bin/dmendreplication -I MIS_TARGET -c -A
-
 /db2/home/cdc/CDC/bin/bin/dmshutdown -I MIS_TARGET -c
-
 /db2/home/cdc/CDC/bin/bin/dmterminate
 
 $ cd CDC
@@ -21,48 +16,39 @@ $ cd CDC
 source --sblprddb
 
 /db2/home/cdc/CDC/bin/bin/dmendreplication -I db2mis_src -c -A
-
 /db2/home/cdc/CDC/bin/bin/dmshutdown -I db2mis_src -c
-
 /db2/home/cdc/CDC/bin/bin/dmterminate
 
 
 nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I db2mis_src &
-
 /db2/home/cdc/CDC/bin/bin/dmstartmirror  -I db2mis_src -c -A
 /db2/home/cdc/CDC/bin/bin/dmgetsubscriptionstatus -I db2mis_src -A
 
 
 sourceitgi
 
-
+NEMARINE start
 nohup /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmts64 -I NEMARINE &
-
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmstartmirror  -I NEMARINE -c -A
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmgetsubscriptionstatus -I NEMARINE -A
 
 /db2/home/cdc
 
-
+sourceitgi stop
 /db2/home/cdc/CDC/bin/bin/dmendreplication -I sourceitgi -c -A
-
 /db2/home/cdc/CDC/bin/bin/dmshutdown -I sourceitgi -c
-
 /db2/home/cdc/CDC/bin/bin/dmterminate
 
 
 NEMARINE_SOURCE
 
-
+NEMARINE_SOURCE start
 nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I NEMARINE_SOURCE &
-
 /db2/home/cdc/CDC/bin/bin/dmstartmirror -I NEMARINE_SOURCE -c -A
 /db2/home/cdc/CDC/bin/bin/dmgetsubscriptionstatus -I NEMARINE_SOURCE -A
 
-
-
+NEMARINE_SOURCE stop
 /db2/home/cdc/CDC/bin/bin/dmendreplication -I NEMARINE_SOURCE -c -A
-
 /db2/home/cdc/CDC/bin/bin/dmshutdown -I NEMARINE_SOURCE -c
 /db2/home/cdc/CDC/bin/bin/dmterminate
 
@@ -73,16 +59,12 @@ nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I NEMARINE_SOURCE &
 
 SOLIXDB
 
-
-
 nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I SOLIXDB &
-
 /db2/home/cdc/CDC/bin/bin/dmstartmirror -I SOLIXDB -c -A
 /db2/home/cdc/CDC/bin/bin/dmgetsubscriptionstatus -I SOLIXDB -A
 
-
+SOLIXDB stop
 /db2/home/cdc/CDC/bin/bin/dmendreplication -I SOLIXDB -c -A
-
 /db2/home/cdc/CDC/bin/bin/dmshutdown -I SOLIXDB -c
 /db2/home/cdc/CDC/bin/bin/dmterminate
 
@@ -92,7 +74,6 @@ nohup /db2/home/cdc/CDC/bin/bin/dmts64 -I SOLIXDB &
 ****************Start on primary server*****************************
 
 nohup /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmts64 -I SBLPRDDB &
-
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmstartmirror  -I SBLPRDDB -c -A
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmgetsubscriptionstatus -I SBLPRDDB -A
 
