@@ -1,0 +1,3 @@
+Run db2 adviser.
+
+db2advis -d myDB -s "query"
