@@ -1,0 +1,7 @@
+Check maximum number of session in db2:
+
+db2 get db cfg for <dbname> | grep -i maxappls
+
+Check Current Sessions:
+
+db2 list applications | wc -l
