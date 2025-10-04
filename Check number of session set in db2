@@ -35,3 +35,6 @@ In some cases, you need to stop and restart the database for the change to take 
 db2 terminate
 db2stop
 db2start
+
+
+db2 get db cfg for sblprddb
