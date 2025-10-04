@@ -5,3 +5,33 @@ db2 get db cfg for <dbname> | grep -i maxappls
 Check Current Sessions:
 
 db2 list applications | wc -l
+
+
+
+In DB2 LUW, the session limit is controlled by the MAXAPPLS parameter (Maximum number of active applications). You can change it at the database level.
+
+Steps to Set Session Limit in DB2
+1. Connect to the database
+db2 connect to <dbname>
+
+2. Update MAXAPPLS
+To set the session limit explicitly, run:
+db2 update db cfg for <dbname> using MAXAPPLS 300
+
+
+This example sets the limit to 300 concurrent sessions.
+
+3. If you prefer automatic tuning
+You can let DB2 decide dynamically:
+db2 update db cfg for <dbname> using MAXAPPLS AUTOMATIC
+
+4. Verify change
+db2 get db cfg for <dbname> | grep -i maxappls
+
+5. Restart Database (sometimes required)
+
+In some cases, you need to stop and restart the database for the change to take effect:
+
+db2 terminate
+db2stop
+db2start
