@@ -1,0 +1,12 @@
+C.1 -  Check if there is any connection waiting for locks:
+
+db2 list application show detail | grep Lock
+
+C.2 -  Find out who's causing the lock waiting
+db2 get snapshot for locks for application agentid 1554
+
+C.3 -  Identify the status of connection holding the lock
+db2 list application show detail | grep 161
+
+D.1 -  Kill application that is holding the lock
+db2 "force application (161)"
