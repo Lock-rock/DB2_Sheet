@@ -1,0 +1,9 @@
+SELECT session_auth_id,
+       application_handle,
+       elapsed_time_sec,
+       activity_state,
+       rows_read,
+       stmt_text as SQLQUERY
+FROM sysibmadm.mon_current_sql
+ORDER BY elapsed_time_sec DESC
+FETCH FIRST 100 ROWS ONLY
