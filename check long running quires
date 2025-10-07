@@ -7,3 +7,12 @@ SELECT session_auth_id,
 FROM sysibmadm.mon_current_sql
 ORDER BY elapsed_time_sec DESC
 FETCH FIRST 100 ROWS ONLY
+
+
+
+
+sblprddb:
+db2 "select 'db2 ''force application (' ||substr( xmlserialize( xmlagg( xmltext( concat( ', ', application_handle ) ) ) as varchar( 4000 ) ), 3 )||')'' ' from (select distinct application_handle FROM sysibmadm.mon_current_sql where session_auth_id != 'DEVTEAM' and (stmt_text like 'SELECT%' or stmt_text like 'select%') and (elapsed_time_sec / 60) > 3)"
+
+Kill log running query from 15 mint:
+db2 "select 'db2 ''force application (' ||substr( xmlserialize( xmlagg( xmltext( concat( ', ', application_handle ) ) ) as varchar( 4000 ) ), 3 )||')'' ' from (select distinct application_handle FROM sysibmadm.mon_current_sql where (stmt_text like 'SELECT%' or stmt_text like 'select%') and (elapsed_time_sec / 60) >15)"
