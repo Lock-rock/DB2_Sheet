@@ -1,0 +1,178 @@
+db2iusr@10.201.77.176's password:
+2 unsuccessful login attempts since last login.
+Last unsuccessful login: Fri Apr 23 16:32:33 IST 2021 on ssh from 10.10.6.95
+Last login: Thu Dec 16 09:20:41 IST 2021 on ssh from 10.10.5.56
+*******************************************************************************
+*                                                                             *
+*                                                                             *
+*  Welcome to AIX Version 7.1!                                                *
+*                                                                             *
+*                                                                             *
+*  Please see the README file in /usr/lpp/bos for information pertinent to    *
+*  this release of the AIX Operating System.                                  *
+*                                                                             *
+*                                                                             *
+*******************************************************************************
+$ db2 deactivate db SBLPRDDB
+
+DB20000I The DEACTIVATE DATABASE command completed successfully.
+$ 
+$ db2 stop hadr on db SBLPRDDB
+DB20000I  The STOP HADR ON DATABASE command completed successfully.
+$
+$
+$ db2 rollforward database SBLPRDDB to end of logs and complete
+
+                                 Rollforward Status
+
+ Input database alias                   = SBLPRDDB
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = not pending
+ Next log file to be read               =
+ Log files processed                    = S0102827.LOG - S0119922.LOG
+ Last committed transaction             = 2022-01-25-17.45.45.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+$
+$
+$ db2 connect to SBLPRDDB
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = DB2INST2
+ Local database alias   = SBLPRDDB 
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+$ db2 deactivate db NEMARINE
+
+DB20000I  The DEACTIVATE DATABASE command completed successfully.
+$ 
+$ db2 stop hadr on db NEMARINE
+DB20000I  The STOP HADR ON DATABASE command completed successfully.
+$
+$
+$ db2 rollforward database NEMARINE to end of logs and complete
+
+                                 Rollforward Status
+
+ Input database alias                   = NEMARINE
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = not pending
+ Next log file to be read               =
+ Log files processed                    = S0102827.LOG - S0119922.LOG
+ Last committed transaction             = 2022-01-25-17.53.45.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+$
+$
+$ db2 connect to NEMARINE
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = DB2INST2
+ Local database alias   = NEMARINE
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+$ su - db2inst1
+db2inst1's Password:
+$
+$ db2 deactivate db ITGI
+DB20000I  The DEACTIVATE DATABASE command completed successfully.
+$
+$
+$ db2 stop hadr on db ITGI
+DB20000I  The STOP HADR ON DATABASE command completed successfully.
+$
+$
+$ db2 rollforward database ITGI to end of logs and complete
+
+
+                                 Rollforward Status
+
+ Input database alias                   = ITGI
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = not pending
+ Next log file to be read               =
+ Log files processed                    = S0064125.LOG - S0314686.LOG
+ Last committed transaction             = 2022-01-25-17.38.25.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+$ $
+$
+$
+$ db2 connect to ITGI
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = DB2INST1
+ Local database alias   = ITGI
+
+$ db2set -all
+[i] DB2_STANDBY_ISO=UR
+[i] DB2_HADR_ROS=ON
+[i] DB2COMM=TCPIP
+[g] DB2SYSTEM=newsiebeldbsec
+[g] DB2INSTDEF=db2iusr
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+$ su - db2solix
+db2solix's Password:
+
+$ db2 deactivate db SOLIXDB
+DB20000I  The DEACTIVATE DATABASE command completed successfully.
+$
+$
+$ db2 stop hadr on db SOLIXDB
+DB20000I  The STOP HADR ON DATABASE command completed successfully.
+$
+$
+$ db2 rollforward database SOLIXDB to end of logs and complete
+
+                                 Rollforward Status
+
+ Input database alias                   = SOLIXDB
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = not pending
+ Next log file to be read               =
+ Log files processed                    = S0025817.LOG - S0027150.LOG
+ Last committed transaction             = 2022-01-25-17.51.43.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+$
+$
+$
+$ db2 connect to SOLIXDB
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = DB2SOLIX
+ Local database alias   = SOLIXDB
+
+$ db2set -all
+[i] DB2_STANDBY_ISO=UR
+[i] DB2_HADR_ROS=YES
+[i] DB2COMM=TCPIP
+[g] DB2SYSTEM=newsiebeldbsec
+[g] DB2INSTDEF=db2iusr
+$
+$
+$
