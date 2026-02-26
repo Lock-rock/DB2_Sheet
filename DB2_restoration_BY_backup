@@ -1,16 +1,23 @@
+If database exsiting then :
+
+1. db2 terminate;   again and again.
+2. db2 drop databae <database_name>
+
+now we can follow below script.
+
 SBLPRDDB.0.db2iusr.DBPART000.20231019232645.001
 
-db2 "restore db SBLPRDDB from /bkpfs/full taken at 20231019232645 redirect generate script /bkpfs/full/SBLPRDDB_restore.clp"
+db2 "restore db <database_name> from /bkpfs/full taken at 20231019232645 redirect generate script /bkpfs/full/<database_name>_restore.clp"
 
 MAKE ALL DIRCTORY GIVEN IN CLIP FILE,
 
 vi SBLPRDDB_restore.sh
 
-chown -R db2iusr:staff SBLPRDDB_restore.sh
+db2 -tvf <database_name>_restore.clp
 
-chmod 775 SBLPRDDB_restore.sh
+chown -R db2iusr:staff <database_name>_restore.sh
 
-db2 -tvf SBLPRDDB_restore.clp
+chmod 775 <database_name>_restore.sh
 
 db2 rollforward db sbluatdb to end of logs and stop
 
