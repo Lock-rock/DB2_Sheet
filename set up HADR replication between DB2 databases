@@ -99,6 +99,8 @@ Note:
 1. Hostname of the HADR pair cannot be the same on both the servers.
 2. The instance name and the underlying userid on UNIX systems can be different.  Make sure to update the correct name of the instance for the db cfg parameter HADR_REMOTE_INST to the correct value.
 
+db2 get db cfg for <database_name> | grep -i hadr
+
 db2 get dbm cfg |grep -i svcename
 
 vi /etc/services
