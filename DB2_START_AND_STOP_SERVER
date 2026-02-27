@@ -13,7 +13,6 @@ db2start
 db2 activate db DBNAME
 db2 connect to DBNAME
 db2 start hadr on db DBNAME as primary
-
 db2 list applications;
 
 start hadr on primary:
