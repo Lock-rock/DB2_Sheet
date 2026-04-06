@@ -1,0 +1,51 @@
+STOP DB2:
+
+STOP HADR (IF EXIST)
+db2 stop hadr on db DBNAME
+db2 connect to DBNAME
+db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;
+db2 deactivate db DBNAME;
+db2 terminate
+
+START DB2:
+
+db2start
+db2 activate db DBNAME
+db2 connect to DBNAME
+db2 start hadr on db DBNAME as primary
+db2 list applications;
+
+start hadr on primary:
+db2 start hadr on db DBNAME as primary
+
+start hadr on Dr side:
+db2 start hadr on db DBNAME as standby
+
+
+#################################################################################################################################################################################################################
+for primary side:
+db2 stop hadr on db ITGIMIS
+
+and start:
+db2 start hadr on db ITGIMIS as primary
+
+For standby server:
+
+STOP DB2:
+
+db2 stop hadr on db ITGIMIS;
+(if the hadr stop work then user db2 force command to disconnect connections)
+
+db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 deactivate db DBNAME;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all; db2 force application all;
+
+db2 dactivate db ITGIMIS;
+db2 stop hadr on db ITGIMIS
+db2stop
+
+START DB2:
+
+db2start
+db2 activate db ITGIMIS;
+db2 start hadr on db ITGIMIS as standby;
+
+#################################################################################################################################################################################################################
