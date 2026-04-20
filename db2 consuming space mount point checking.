@@ -1,0 +1,132 @@
+1. Check what’s consuming space
+
+Start by identifying which directories under /home are growing:
+
+du -sm /home/* | sort -n
+
+Then drill down into the biggest one:
+
+du -sm /home/<suspect_dir>/* | sort -n
+
+2. Common reasons DB2 uses /home
+
+a) Instance home directory
+When you created the DB2 instance user (e.g. db2inst1), its home directory is usually under /home/db2inst1.
+DB2 stores a lot there:
+
+instance configuration (sqllib)
+diagnostic logs (db2dump)
+sometimes database directories (if created with relative paths)
+
+👉 If databases were created without specifying a path, they may default inside the instance home.
+b) Diagnostic logs filling up
+Check:
+
+/home/db2inst1/sqllib/db2dump
+
+Files like:
+
+db2diag.log
+.trc files
+.dump files
+
+These can grow very large.
+
+c) Transaction logs
+If log path wasn’t explicitly set, logs might be under /home.
+
+Check inside DB:
+
+db2 get db cfg for <dbname> | grep -i log
+
+Look for:
+
+Path to log files
+
+d) Temporary tablespaces / sort space
+Large queries can spill temp data if configured poorly.
+
+3. Immediate cleanup (safe checks)
+
+Be careful, but you can usually:
+
+Rotate or truncate diag logs:
+> db2diag.log
+Remove old dump files:
+rm -f *.dump *.trc
+4. Long-term fixes
+
+Move logs out of /home:
+
+db2 update db cfg for <dbname> using NEWLOGPATH /db2logs
+
+Move database storage:
+
+Create new tablespaces in another filesystem
+Or restore DB to a new location
+
+Change diagnostic path:
+
+db2 update dbm cfg using DIAGPATH /db2diag
+5. Best practice layout (AIX + DB2)
+
+Avoid putting DB2-heavy data in /home. Use separate filesystems:
+
+/db2data → tablespaces
+/db2logs → transaction logs
+/db2backup → backups
+/db2diag → diagnostics
+6. Quick sanity check
+
+Run:
+
+df -g /home
+
+If it’s near 100%, act quickly—DB2 can stop or crash if it can’t write logs.
+
+If you want, tell me:
+
+your DB2 version
+output of du -sm /home/*
+and db2 get db cfg
+
+I can pinpoint exactly what’s filling it and give you a precise fix instead of general advice.
+
+✅ Method 1: Using DB2 command
+
+Run this as the instance user (e.g. db2inst1):
+
+db2 get dbm cfg | grep -i diagpath
+
+You’ll get output like:
+
+Diagnostic data directory path (DIAGPATH) = /home/db2inst1/sqllib/db2dump
+
+👉 That path is where db2diag.log and other diagnostic files are stored.
+
+✅ Method 3: Find the file directly
+
+If you're unsure, search for it:
+
+find / -name db2diag.log 2>/dev/null
+⚠️ Important
+
+If your /home is filling up, and you see something like:
+
+/home/db2inst1/sqllib/db2dump/db2diag.log
+
+then that’s likely the culprit.
+
+🔧 If you want to move it
+
+You can change the diag path:
+
+db2 update dbm cfg using DIAGPATH /new/path
+db2stop
+db2start
+
+Make sure the new directory:
+
+exists
+has proper ownership (db2inst1)
+has enough space
