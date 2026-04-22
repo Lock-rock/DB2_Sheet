@@ -1,6 +1,7 @@
+first create a user :
+then do this:
+
 vi .db2toprc
-
-
 #
 # db2top configuration file
 # On unix, should be located in $HOME/.db2toprc
@@ -39,3 +40,17 @@ locks=sort=0a
 utilities=sort=0a
 # Ordering of information in federation screen
 federation=sort=0a
+
+and add profile on server(that is copy by with used server to db2top).
+
+the give grants:
+GRANT CONNECT ON DATABASE TO USER GUEST;
+
+check monitoring gruoup:
+db2 get dbm cfg | grep -i sysmon
+output like this :
+SYSMon group name (SYSMON_GROUP) = db2mon
+
+give ownership or change :
+usermod -aG db2mon guest
+
