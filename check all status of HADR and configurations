@@ -1,0 +1,10 @@
+Check configuration of database:
+db2 get db cfg for ITGI
+
+Check hadr status and configuation and update:
+db2pd -db <DB_NAME> -hadr
+configuation:
+db2 get db cfg for <DB_NAME> | grep -i hadr
+update:
+db2 update db cfg for <DB_NAME> using <PARAMETER> <VALUE>
+
