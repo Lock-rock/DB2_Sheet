@@ -1,0 +1,63 @@
+First we create a dirctory:
+mkdir license
+
+Now we check directory:
+pwd
+result show:/db2/license
+
+now change directory : aese_c
+cd aese_c
+
+now list dirctory:
+ls -ltt
+result:
+		db2
+		qs_server
+		readme
+		warehouse
+
+now change and go in warehouse:
+cd warehouse
+
+now list dirctory:
+ls -ltr
+
+result:
+		warehouse_prereq_server.xml
+		warehouse_prereq_client.xml
+		db2aese_c.lic
+		redist.txt
+		profile.rsp
+		LA
+		tags
+
+now check license in db2:
+db2licm -l
+
+result:
+		Product name:                     "DB2 Advanced Enterprise Server Edition"
+		License type:                     "Trial"
+		Expiry date:                      "07/05/2024"
+		Product identifier:               "db2aese"
+		
+		Version information:              "10.5"
+
+
+now add license with this command:
+db2licm -a db2aese_c.lic
+
+LIC1402I  License added successfully.
+LIC1426I  This product is now licensed for use as outlined in your License Agreement.  USE OF THE PRODUCT CONSTITUTES ACCEPTANCE OF THE TERMS OF THE IBM LICENSE AGREEMENT, LOCATED IN THE FOLLOWING DIRECTORY: "/db2/IBM/db2/V10.5/license/en_US.iso88591"
+
+now verify the license active or not:
+db2licm -l
+
+resutl:
+		Product name:                     "DB2 Advanced Enterprise Server Edition"
+		License type:                     "CPU Option"
+		Expiry date:                      "Permanent"
+		Product identifier:               "db2aese"
+		Version information:              "10.5"
+		Enforcement policy:               "Soft Stop"
+
+Software path in PC: C:\Users\kuldeeprawat.ext\Desktop\Software\db2 licence
