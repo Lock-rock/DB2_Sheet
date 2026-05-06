@@ -19,3 +19,4 @@ db2 "select ((select sum(fpages*pagesize) from syscat.tablespaces as a, syscat.t
 
 Database Size
 db2 "SELECT SUM(TBSP_USED_SIZE_KB) / (1024 * 1024) AS DATABASE_SIZE_GB FROM SYSIBMADM.TBSP_UTILIZATION"
+
