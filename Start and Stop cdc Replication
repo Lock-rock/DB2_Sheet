@@ -77,7 +77,7 @@ nohup /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmstartmirror  -I SBLPRDDB -c -A
 /db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmgetsubscriptionstatus -I SBLPRDDB -A
 
-
+/db2/home/cdc/IBM/InfoSphereDataReplication/ReplicationEngineforIBMDB2/bin/dmendreplication -I SBLPRDDB -s S_CLAIM
 
 ****************stop on target server*****************************
 
