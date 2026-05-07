@@ -43,3 +43,24 @@ db2 list tables for schema MARUTI_SUZUKI
 db2 describe table MARUTI_SUZUKI.CX_QUOTE_ASSET
 
 db2 " select count (1) from syscat.tables where TABSCHEMA='MARUTI_SUZUKI'"
+
+
+
+=====================================================================================================================================================================
+db2 "EXPORT TO employees.ixf OF IXF SELECT * FROM hr.employees" > export.log
+
+--DB2 script: DB2 Import Command Explanation for CSV Data Load:
+IMPORT FROM E:\load_table\Motor_API\alok\106_MOT_PREM_JAN_2026.csv OF DEL MODIFIED BY COLDEL, MESSAGES E:\load_table\Motor_API\alok/import.log INSERT INTO MISRPA.POLICY_IIB
+
+--DB2 script: DB2 Import Command Explanation for ignore identical colume valus:like increment serial number
+import from "E:\load_table\Marinehimanshu.csv of del modified by identityignore messages "E:\load_table\Marinehimanshu..msg replace into MISRPA.Marine_Cargo_Claim_IIB
+
+db2 IMPORT FROM "F:\CSV\MISRPA.TPA_PEGA_CLAIMS_DATA.csv" OF DEL REPLACE INTO MISRPA.TPA_PEGA_CLAIMS_DATA
+
+--DB2 script: For load large data in table:
+db2 "load from \"F:\CSV\MISRPA.IN_HOUSE_PEGA_DATA.csv\"
+of del 
+messages \"F:\CSV\load.log\" 
+insert into MISRPA.IN_HOUSE_PEGA_DATA"
+
+
