@@ -1,0 +1,61 @@
+How to know the table, schema and database size
+The table size is the sum of pagesize*(number of table pages) plus pagesize*(number of index pages)
+
+--DB2 script: Schema Size in GB
+db2 "SELECT
+(
+    COALESCE(t.DATA_SIZE, 0) + COALESCE(i.INDEX_SIZE, 0)
+) / (1024 * 1024) AS SCHEMA_SIZE_GB
+FROM 
+(
+    SELECT 
+        SUM(b.fpages * a.pagesize) AS DATA_SIZE
+    FROM 
+        syscat.tablespaces a
+        JOIN syscat.tables b 
+          ON a.TBSPACEID = b.TBSPACEID
+    WHERE 
+        b.TABSCHEMA = 'ADMINISTRATOR'
+) t,
+(
+    SELECT 
+        SUM(b.nleaf * a.pagesize) AS INDEX_SIZE
+    FROM 
+        syscat.tablespaces a
+        JOIN syscat.indexes b 
+          ON a.TBSPACEID = b.TBSPACEID
+    WHERE 
+        b.TABSCHEMA = 'ADMINISTRATOR'
+) i";
+
+output like:
+SCHEMA_SIZE_GB
+--------------------
+               34933
+
+
+--DB2 script: Database Size in GB
+db2 "SELECT
+    SUM(TBSP_USED_SIZE_KB) / (1024 * 1024) AS DATABASE_SIZE_GB
+FROM 
+    SYSIBMADM.TBSP_UTILIZATION";
+
+output like:
+DATABASE_SIZE_GB
+--------------------
+                 222
+
+
+another query with details:
+db2 "SELECT
+    DECIMAL(SUM(TBSP_TOTAL_SIZE_KB) / (1024 * 1024), 12, 2) AS TOTAL_SIZE_GB,
+    DECIMAL(SUM(TBSP_USED_SIZE_KB) / (1024 * 1024), 12, 2) AS USED_SIZE_GB,
+    DECIMAL((SUM(TBSP_TOTAL_SIZE_KB) - SUM(TBSP_USED_SIZE_KB)) / (1024 * 1024), 12, 2) AS FREE_SIZE_GB
+FROM 
+    SYSIBMADM.TBSP_UTILIZATION";
+
+output like:
+TOTAL_SIZE_GB  USED_SIZE_GB   FREE_SIZE_GB
+-------------- -------------- --------------
+        235.00         222.00          12.00
+
