@@ -1,21 +1,136 @@
 Check tablesize in db2 database:-
 
-Put the table name in the end of the query
+-- DB2 Script: Table Size Report for Multiple Tables
+
+db2 "SELECT 
+    SUBSTR(TABSCHEMA,1,18) AS TABSCHEMA,
+    SUBSTR(TABNAME,1,30) AS TABNAME,
+    -- Total size in KB
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,
+    -- Total size in MB
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / 1024 AS TOTAL_SIZE_IN_MB,
+    -- Total size in GB
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / (1024 * 1024) AS TOTAL_SIZE_IN_GB
+FROM SYSIBMADM.ADMINTABINFO
+WHERE TABNAME IN 
+(
+    'KYC_CONFIG ',
+    'KYC_DETAILS ',
+    'KYC_USERS '
+)
+ORDER BY TOTAL_SIZE_IN_MB DESC";
+
+Output like:
+TABSCHEMA          TABNAME                        TOTAL_SIZE_IN_KB     TOTAL_SIZE_IN_MB     TOTAL_SIZE_IN_GB
+------------------ ------------------------------ -------------------- -------------------- --------------------
+ADMINISTRATOR      KYC_DETAILS                                37601280                36720                   35
+ADMINISTRATOR      KYC_USERS                                       512                    0                    0
+ADMINISTRATOR      KYC_CONFIG                                      512                    0                    0
+
+-- DB2 Script: Total Table Size Analysis Query:
+
+db2 "SELECT
+    SUBSTR(TABSCHEMA, 1, 18) AS TABSCHEMA,
+    SUBSTR(TABNAME, 1, 30)   AS TABNAME,
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / 1024 AS TOTAL_SIZE_IN_MB,
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / (1024 * 1024) AS TOTAL_SIZE_IN_GB
+FROM SYSIBMADM.ADMINTABINFO
+WHERE TABSCHEMA NOT LIKE 'SYS%'
+ORDER BY XML_OBJECT_P_SIZE DESC";
+
+Output like:
+TABSCHEMA          TABNAME                        TOTAL_SIZE_IN_KB     TOTAL_SIZE_IN_MB     TOTAL_SIZE_IN_GB
+------------------ ------------------------------ -------------------- -------------------- --------------------
+CDC                TS_AUTH                                         256                    0                    0
+DB2INST1           EXPLAIN_INSTANCE                                 64                    0                    0
+DB2INST1           EXPLAIN_STATEMENT                               640                    0                    0
+ADMINISTRATOR      PARTNER_SKP_MEMBER                             5504                    5                    0
 
 
+-- DB2 Script: Check table data with lob data:
 
-db2 "SELECT SUBSTR(TABSCHEMA,1,18) TABSCHEMA,SUBSTR(TABNAME,1,30) TABNAME,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE)/1024 AS TOTAL_SIZE_IN_MB, (DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) / (1024*1024) AS TOTAL_SIZE_IN_GB FROM SYSIBMADM.ADMINTABINFO WHERE TABNAME='DM_DOCUMENT_S'";
+db2 "SELECT
+    SUBSTR(TABSCHEMA, 1, 18) AS TABSCHEMA,
+    SUBSTR(TABNAME, 1, 30)   AS TABNAME,
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / 1024 AS TOTAL_SIZE_IN_MB,
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + LOB_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / (1024 * 1024) AS TOTAL_SIZE_IN_GB
+FROM SYSIBMADM.ADMINTABINFO
+WHERE TABNAME = 'DM_DOCUMENT_S'";
 
 
-db2 "SELECT SUBSTR(TABSCHEMA,1,18) TABSCHEMA,SUBSTR(TABNAME,1,30) TABNAME,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE)/1024 AS TOTAL_SIZE_IN_MB, (DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) / (1024*1024) AS TOTAL_SIZE_IN_GB FROM SYSIBMADM.ADMINTABINFO WHERE TABSCHEMA NOT LIKE 'SYS%' order by XML_OBJECT_P_SIZE desc ";
-
-
-
-$ db2 "SELECT SUBSTR(TABSCHEMA,1,18) TABSCHEMA,SUBSTR(TABNAME,1,30) TABNAME,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,(DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE)/1024 AS TOTAL_SIZE_IN_MB, (DATA_OBJECT_P_SIZE + INDEX_OBJECT_P_SIZE + LONG_OBJECT_P_SIZE + LOB_OBJECT_P_SIZE + XML_OBJECT_P_SIZE) / (1024*1024) AS TOTAL_SIZE_IN_GB FROM SYSIBMADM.ADMINTABINFO WHERE TABNAME='DM_DOCUMENT_S'";
-
-
+Output like:
 TABSCHEMA          TABNAME                        TOTAL_SIZE_IN_KB     TOTAL_SIZE_IN_MB     TOTAL_SIZE_IN_GB
 ------------------ ------------------------------ -------------------- -------------------- --------------------
 DMADMIN            DM_DOCUMENT_S                              24008192                23445                   22
 
   1 record(s) selected.
+
+-- DB2 Script: Check table data without lob data:
+
+db2 "SELECT
+    SUBSTR(TABSCHEMA,1,18) AS TABSCHEMA,
+    SUBSTR(TABNAME,1,30) AS TABNAME,
+
+    -- Size without LOB
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) AS TOTAL_SIZE_IN_KB,
+
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / 1024 AS TOTAL_SIZE_IN_MB,
+
+    (DATA_OBJECT_P_SIZE 
+     + INDEX_OBJECT_P_SIZE 
+     + LONG_OBJECT_P_SIZE 
+     + XML_OBJECT_P_SIZE) / (1024*1024) AS TOTAL_SIZE_IN_GB
+
+FROM SYSIBMADM.ADMINTABINFO
+WHERE TABNAME = 'KYC_DETAILS_DOCUMENT'"
+
+Output like:
+TABSCHEMA          TABNAME                        TOTAL_SIZE_IN_KB     TOTAL_SIZE_IN_MB     TOTAL_SIZE_IN_GB
+------------------ ------------------------------ -------------------- -------------------- --------------------
+ADMINISTRATOR      KYC_DETAILS_DOCUMENT                       18539776                18105                   17
+
+
