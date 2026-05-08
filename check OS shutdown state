@@ -1,0 +1,5 @@
+check error
+errpt -a
+
+Check adapter status
+lsdev -Cc adapter | grep fcs
