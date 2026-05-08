@@ -1,0 +1,1023 @@
+DB2 SQL-Error: -007 SQLState: 42601
+Short Description: STATEMENT CONTAINS THE ILLEGAL CHARACTER
+The specified 'character' is not a valid character in SQL statements. System action: The statement cannot be executed. Programmer response: Correct the syntax and resubmit the statement. Refer to Chapter 2 of DB2 SQL Reference for information about the valid SQL character set.
+
+DB2 SQL-Error: -010 SQLState: 42603
+Short Description: THE STRING CONSTANT BEGINNING IS NOT TERMINATED
+The statement contains a string constant, beginning with 'string', that is not terminated properly. System action: The statement cannot be executed. Programmer response: Examine the statement for missing quotation marks or apostrophes in the indicated string constant.
+
+DB2 SQL-Error: -029 SQLState: 42601
+Short Description: INTO CLAUSE REQUIRED
+SELECT statements embedded in an application program must have an INTO clause to denote where the results of the SELECT are to be placed. Dynamic SELECT statements do not permit the INTO clause. System action: The statement cannot be executed. Programmer response: Add the INTO clause to the SELECT statement and precompile the application program again.
+
+SQL0051 SQLCODE -51 SQLSTATE 3C000
+Explanation: Cursor or procedure &1 previously declared.
+
+DB2 SQL-Error: -58 SQLState: 428F2
+Short Description: A RETURN SQL T RETURN SQL INTEGER
+A RETURN statement is specified in the SQL procedure with a value or expression that is not of the INTEGER data type. System action: The statement cannot be processed. User response: Specify a value on the RETURN statement that has a data type of INTEGER.
+
+
+SQL0060 SQLCODE -60 SQLSTATE 42815
+Explanation: Value &3 for argument &1 of &2 function not valid.
+
+SQL0078 SQLCODE -78 SQLSTATE 42629
+Explanation: Parameter name required for routine &1 in &2.
+
+SQL0080 SQLCODE -80 SQLSTATE 42978
+Explanation: Indicator variable &1 not SMALLINT type.
+
+SQL0084 SQLCODE -84 SQLSTATE 42612
+Explanation: SQL statement not allowed.
+
+SQL0090 SQLCODE -90 SQLSTATE 42618
+Explanation: Host variable not permitted here.
+
+SQL0097 SQLCODE -97 SQLSTATE 42601
+Explanation: Use of data type not valid.
+
+SQL0099 SQLCODE -99 SQLSTATE 42992
+Explanation: Operator in join condition not valid.
+
+SQL0101 SQLCODE -101 SQLSTATE 54001, 54010, 54011
+Explanation: SQL statement too long or complex.
+
+SQL0102 SQLCODE -102 SQLSTATE 54002
+Explanation: String constant beginning with &1 too long.
+
+SQL0103 SQLCODE -103 SQLSTATE 42604
+Explanation: Numeric constant &1 not valid.
+
+SQL0104 SQLCODE -104 SQLSTATE 42601
+Explanation: Token &1 was not valid. Valid tokens: &2.
+
+SQL0105 SQLCODE -105 SQLSTATE 42604
+Explanation: Mixed or graphic string constant not valid.
+
+SQL0106 SQLCODE -106 SQLSTATE 42611
+Explanation: Precision specified for FLOAT column not valid.
+
+SQL0107 SQLCODE -107 SQLSTATE 42622
+Explanation: &1 too long. Maximum &2 characters.
+
+SQL0109 SQLCODE -109 SQLSTATE 42601
+Explanation: &1 clause not allowed.
+
+SQL0110 SQLCODE -110 SQLSTATE 42606
+Explanation: Hexadecimal constant beginning with &1 not valid.
+
+SQL0112 SQLCODE -112 SQLSTATE 42607
+Explanation: Argument of function &1 is another function.
+
+SQL0113 SQLCODE -113 SQLSTATE 28000, 2E000, 42602
+Explanation: Name &1 not allowed.
+
+SQL0114 SQLCODE -114 SQLSTATE 42961
+Explanation: Relational database &1 not the same as current server &2.
+
+SQL0115 SQLCODE -115 SQLSTATE 42601
+Explanation: Comparison operator &1 not valid.
+
+SQL0117 SQLCODE -117 SQLSTATE 42802
+Explanation: Statement inserts wrong number of values.
+
+SQL0118 SQLCODE -118 SQLSTATE 42902
+Explanation: Table &1 in &2 also specified in a FROM clause.
+
+SQL0119 SQLCODE -119 SQLSTATE 42803
+Explanation: Column &1 in HAVING clause not in GROUP BY.
+
+SQL0120 SQLCODE -120 SQLSTATE 42903
+Explanation: Use of column function &2 not valid.
+
+SQL0121 SQLCODE -121 SQLSTATE 42701
+Explanation: Duplicate column name &1 in INSERT or UPDATE.
+
+SQL0122 SQLCODE -122 SQLSTATE 42803
+Explanation: Column specified in SELECT list not valid.
+
+SQL0125 SQLCODE -125 SQLSTATE 42805
+Explanation: ORDER BY column number &1 not valid.
+
+SQL0128 SQLCODE -128 SQLSTATE 42601
+Explanation: Use of NULL is not valid.
+
+SQL0129 SQLCODE -129 SQLSTATE 54004
+Explanation: Too many tables in SQL statement.
+
+SQL0130 SQLCODE -130 SQLSTATE 22019, 22025
+Explanation: Escape character &1 or LIKE pattern not valid.
+
+SQL0131 SQLCODE -131 SQLSTATE 42818
+Explanation: Operands of LIKE not compatible or not valid.
+
+SQL0132 SQLCODE -132 SQLSTATE 42824
+Explanation: LIKE predicate not valid.
+
+SQL0133 SQLCODE -133 SQLSTATE 42906
+Explanation: Operator on correlated column in SQL function not valid.
+
+SQL0134 SQLCODE -134 SQLSTATE 42907
+Explanation: Argument of function too long.
+
+SQL0136 SQLCODE -136 SQLSTATE 54005
+Explanation: ORDER BY or GROUP BY columns too long.
+
+SQL0137 SQLCODE -137 SQLSTATE 54006
+Explanation: Result too long.
+
+SQL0138 SQLCODE -138 SQLSTATE 22011
+Explanation: Argument &1 of SUBSTR function not valid.
+
+SQL0144 SQLCODE -144 SQLSTATE 58003
+Explanation: Section number not valid.
+
+SQL0145 SQLCODE -145 SQLSTATE 55005
+Explanation: Recursion not supported for an application server other than the AS/400 system.
+
+SQL0150 SQLCODE -150 SQLSTATE 42807
+Explanation: View or logical file &1 in &2 read-only.
+
+SQL0151 SQLCODE -151 SQLSTATE 42808
+Explanation: Column &1 in table &2 in &3 read-only.
+
+SQL0152 SQLCODE -152 SQLSTATE 42809
+Explanation: Constraint type not valid for constraint &1 in &2.
+
+SQL0153 SQLCODE -153 SQLSTATE 42908
+Explanation: Column list required for CREATE VIEW.
+
+SQL0154 SQLCODE -154 SQLSTATE 42909
+Explanation: UNION and UNION ALL for CREATE VIEW not valid.
+
+SQL0156 SQLCODE -156 SQLSTATE 42809
+Explanation: &1 in &2 not a table.
+
+SQL0157 SQLCODE -157 SQLSTATE 42810
+Explanation: View &1 in &2 not valid in FOREIGN KEY clause.
+
+SQL0158 SQLCODE -158 SQLSTATE 42811
+Explanation: Number of columns specified not consistent.
+
+SQL0159 SQLCODE -159 SQLSTATE 42809
+Explanation: &1 in &2 not correct type.
+
+SQL0160 SQLCODE -160 SQLSTATE 42813
+Explanation: WITH CHECK OPTION not allowed for view &1 in &2.
+
+SQL0161 SQLCODE -161 SQLSTATE 44000
+Explanation: INSERT/UPDATE not allowed due to WITH CHECK OPTION.
+
+SQL0170 SQLCODE -170 SQLSTATE 42605
+Explanation: Number of arguments for function &1 not valid.
+
+SQL0171 SQLCODE -171 SQLSTATE 42815
+Explanation: Argument &1 of function &2 not valid.
+
+SQL0175 SQLCODE -175 SQLSTATE 58028
+Explanation: COMMIT failed.
+
+SQL0180 SQLCODE -180 SQLSTATE 22007
+Explanation: Syntax of date, time, or timestamp value not valid.
+
+SQL0181 SQLCODE -181 SQLSTATE 22007
+Explanation: Value in date, time, or timestamp string not valid.
+
+SQL0182 SQLCODE -182 SQLSTATE 42816
+Explanation: A date, time, or timestamp expression not valid.
+
+SQL0183 SQLCODE -183 SQLSTATE 22008
+Explanation: The result of a date or timestamp expression not valid.
+
+SQL0184 SQLCODE -184 SQLSTATE 42610
+Explanation: Parameter marker not valid in expression.
+
+SQL0187 SQLCODE -187 SQLSTATE 42816
+Explanation: Use of labeled duration is not valid.
+
+SQL0188 SQLCODE -188 SQLSTATE 22503, 28000, 2E000
+Explanation: &1 is not a valid string representation of an authorization name or a relational database name.
+
+SQL0189 SQLCODE -189 SQLSTATE 22522
+Explanation: Coded Character Set Identifier &1 is not valid.
+
+SQL0190 SQLCODE -190 SQLSTATE 42837
+Explanation: Attributes of column &3 in &1 in &2 not compatible.
+
+SQL0191 SQLCODE -191 SQLSTATE 22504
+Explanation: MIXED data not properly formed.
+
+SQL0192 SQLCODE -192 SQLSTATE 42937
+Explanation: Argument of TRANSLATE function not valid.
+
+SQL0194 SQLCODE -194 SQLSTATE 42848
+Explanation: KEEP LOCKS not allowed.
+
+SQL0195 SQLCODE -195 SQLSTATE 42814
+Explanation: Last column of &1 in &2 cannot be dropped.
+
+SQL0196 SQLCODE -196 SQLSTATE 42817
+Explanation: Column &3 in &1 in &2 cannot be dropped with RESTRICT.
+
+SQL0197 SQLCODE -197 SQLSTATE 42877
+Explanation: Column &1 cannot be qualified.
+
+SQL0198 SQLCODE -198 SQLSTATE 42617
+Explanation: SQL statement empty or blank.
+
+SQL0199 SQLCODE -199 SQLSTATE 42601
+Explanation: Keyword &1 not expected. Valid tokens: &2.
+
+SQL0203 SQLCODE -203 SQLSTATE 42702
+Explanation: Column &1 is ambiguous.
+
+SQL0204 SQLCODE -204 SQLSTATE 42704
+Explanation: &1 in &2 type *&3 not found.
+
+SQL0205 SQLCODE -205 SQLSTATE 42703
+Explanation: Column &1 not in table &2.
+
+SQL0206 SQLCODE -206 SQLSTATE 42703
+Explanation: Column &1 not in specified tables.
+
+SQL0208 SQLCODE -208 SQLSTATE 42707
+Explanation: ORDER BY column &1 not in results table.
+
+SQL0212 SQLCODE -212 SQLSTATE 42712
+Explanation: Duplicate table designator &1 not valid.
+
+SQL0214 SQLCODE -214 SQLSTATE 42822
+Explanation: ORDER BY expression is not valid.
+
+SQL0221 SQLCODE -221 SQLSTATE 42873
+Explanation: Number of rows &2 not valid.
+
+SQL0225 SQLCODE -225 SQLSTATE 42872
+Explanation: FETCH not valid; cursor &1 not declared with SCROLL.
+
+SQL0226 SQLCODE -226 SQLSTATE 24507
+Explanation: Current row deleted or moved for cursor &1.
+
+SQL0227 SQLCODE -227 SQLSTATE 24513
+Explanation: FETCH not valid, cursor &1 in unknown position.
+
+SQL0228 SQLCODE -228 SQLSTATE 42620
+Explanation: FOR UPDATE OF clause not valid with SCROLL for cursor &1.
+
+SQL0231 SQLCODE -231 SQLSTATE 22006
+Explanation: Position of cursor &1 not valid for FETCH of current row.
+
+SQL0250 SQLCODE -250 SQLSTATE 42718
+Explanation: Local relational database not defined in the directory.
+
+SQL0251 SQLCODE -251 SQLSTATE 2E000, 42602
+Explanation: Character in relational database name &1 is not valid.
+
+SQL0255 SQLCODE -255 SQLSTATE 42999
+Explanation: DB2 Multisystem query error.
+
+SQL0256 SQLCODE -256 SQLSTATE 42998
+Explanation: Constraint &1 in &2 not allowed on distributed file.
+
+SQL0270 SQLCODE -270 SQLSTATE 42997
+Explanation: Unique index not allowed.
+
+SQL0301 SQLCODE -301 SQLSTATE 07006,42895
+Explanation: Input host variable &2 or argument &1 not valid.
+
+SQL0302 SQLCODE -302 SQLSTATE 22001, 22003, 22023, 22024
+Explanation: Conversion error on input host variable &2.
+Muze znamenat data length over limit.
+
+SQL0303 SQLCODE -303 SQLSTATE 22001, 42806
+Explanation: Host variable &1 not compatible with SELECT item.
+
+SQL0304 SQLCODE -304 SQLSTATE 22003, 22023, 22504
+Explanation: Conversion error in assignment to host variable &2.
+
+SQL0305 SQLCODE -305 SQLSTATE 22002
+Explanation: Indicator variable required.
+
+SQL0306 SQLCODE -306 SQLSTATE 42863
+Explanation: Undefined host variable in REXX.
+
+SQL0311 SQLCODE -311 SQLSTATE 22501
+Explanation: Length in a varying-length host variable not valid.
+
+SQL0312 SQLCODE -312 SQLSTATE 42618
+Explanation: Host variable &1 not defined or not usable.
+
+SQL0313 SQLCODE -313 SQLSTATE 07001, 07004
+Explanation: Number of host variables not valid.
+
+SQL0328 SQLCODE -328 SQLSTATE 42996
+Explanation: Column &1 not allowed in partitioning key.
+
+SQL0329 SQLCODE -329 SQLSTATE 0E000
+Explanation: The SET PATH name list is not valid.
+
+SQL0330 SQLCODE -330 SQLSTATE 22021
+Explanation: Character conversion cannot be performed.
+
+SQL0331 SQLCODE -331 SQLSTATE 22021
+Explanation: Character conversion cannot be performed.
+
+SQL0332 SQLCODE -332 SQLSTATE 57017
+Explanation: Character conversion between CCSID &1 and CCSID &2 not valid.
+
+SQL0334 SQLCODE -334 SQLSTATE 22524
+Explanation: Character conversion has resulted in truncation.
+
+SQL0338 SQLCODE -338 SQLSTATE 42972
+Explanation: JOIN expression not valid.
+
+SQL0340 SQLCODE -340 SQLSTATE 42726
+Explanation: Duplicate name &1 for common table expression.
+
+SQL0341 SQLCODE -341 SQLSTATE 42835
+Explanation: Cyclic references between common table expressions.
+
+SQL0346 SQLCODE -346 SQLSTATE 42836
+Explanation: Recursion not allowed for common table expressions.
+
+SQL0350 SQLCODE -350 SQLSTATE 42962
+Explanation: Column &1 is not valid as key field for index or constraint.
+
+SQL0351 SQLCODE -351 SQLSTATE 56084
+Explanation: The AR is not at the same level and DB2/400 cannot transform the data type to a compatible type.
+
+SQL0352 SQLCODE -352 SQLSTATE 56084
+Explanation: The AS is not at the same level and DB2/400 cannot transform the data type to a compatible type.
+
+SQL0357 SQLCODE -357 SQLSTATE 57050
+Explanation: File server &1 used in DataLink not currently available.
+
+SQL0358 SQLCODE -358 SQLSTATE 428D1
+Explanation: Error &1 occurred using DataLink data type.
+
+SQL0392 SQLCODE -392 SQLSTATE 42855
+Explanation: Assignment of LOB to specified host variable not allowed.
+
+SQL0398 SQLCODE -398 SQLSTATE 428D2
+Explanation: AS LOCATOR cannot be specified for a non-LOB parameter.
+
+SQL0401 SQLCODE -401 SQLSTATE 42818
+Explanation: Comparison operator &1 operands not compatible.
+
+SQL0402 SQLCODE -402 SQLSTATE 42819
+Explanation: &1 use not valid.
+
+SQL0404 SQLCODE -404 SQLSTATE 22001
+Explanation: Value for column &1 too long.
+
+SQL0405 SQLCODE -405 SQLSTATE 42820
+Explanation: Numeric constant &1 out of range.
+
+SQL0406 SQLCODE -406 SQLSTATE 22003, 22023, 22504
+Explanation: Conversion error on assignment to column &2.
+
+SQL0407 SQLCODE -407 SQLSTATE 23502
+Explanation: Null values are not allowed in column &1.
+
+SQL0408 SQLCODE -408 SQLSTATE 42821
+Explanation: INSERT or UPDATE value for column &1 not compatible.
+
+SQL0410 SQLCODE -410 SQLSTATE 42820
+Explanation: Floating point literal &1 not valid.
+
+SQL0412 SQLCODE -412 SQLSTATE 42823
+Explanation: Subquery with more than one result column not valid.
+
+SQL0414 SQLCODE -414 SQLSTATE 42824
+Explanation: Column &1 not valid in LIKE predicate.
+
+SQL0415 SQLCODE -415 SQLSTATE 42825
+Explanation: UNION operands not compatible.
+
+SQL0417 SQLCODE -417 SQLSTATE 42609
+Explanation: Combination of parameter markers not valid.
+
+SQL0418 SQLCODE -418 SQLSTATE 42610
+Explanation: Use of parameter marker is not valid.
+
+SQL0419 SQLCODE -419 SQLSTATE 42911
+Explanation: Negative scale not valid.
+
+SQL0420 SQLCODE -420 SQLSTATE 22018
+Explanation: Character in CAST argument not valid.
+
+SQL0421 SQLCODE -421 SQLSTATE 42826
+Explanation: Number of UNION operands not equal.
+
+SQL0423 SQLCODE -423 SQLSTATE 0F001
+Explanation: LOB locator &1 not valid.
+
+SQL0428 SQLCODE -428 SQLSTATE 25501
+Explanation: SQL statement cannot be run.
+
+SQL0429 SQLCODE -429 SQLSTATE 54028
+Explanation: The maximum number of concurrent LOB locators has been reached.
+
+SQL0432 SQLCODE -432 SQLSTATE 42841
+Explanation: A parameter marker cannot have the user-defined type name &1.
+
+SQL0433 SQLCODE -433 SQLSTATE 22001
+Explanation: Significant digits truncated during CAST from numeric to character.
+
+SQL0440 SQLCODE -440 SQLSTATE 42884
+Explanation: Number of arguments on CALL must match procedure.
+
+SQL0441 SQLCODE -441 SQLSTATE 42601
+Explanation: Clause or keyword &1 not valid where specified.
+
+SQL0442 SQLCODE -442 SQLSTATE 54023
+Explanation: Maximum # of parameters on CALL exceeded.
+
+SQL0443 SQLCODE -443 SQLSTATE 2Fxxx, 38501
+Explanation: Trigger program or external procedure detected on error.
+
+SQL0444 SQLCODE -444 SQLSTATE 42724
+Explanation: External program &4 in &1 not found.
+
+SQL0446 SQLCODE -446 SQLSTATE 22003
+Explanation: Conversion error in assignment of argument &2.
+
+SQL0448 SQLCODE -448 SQLSTATE 54023
+Explanation: Maximum parameters on DECLARE PROCEDURE exceeded.
+
+SQL0449 SQLCODE -449 SQLSTATE 42878
+Explanation: External program name for procedure &1 in &2 not valid.
+
+SQL0451 SQLCODE -451 SQLSTATE 42815
+Explanation: Attributes of parameter &1 not valid for procedure.
+
+SQL0452 SQLCODE -452 SQLSTATE 428A1
+Explanation: Unable to access a file that is referred to by a file reference variable.
+
+SQL0453 SQLCODE -453 SQLSTATE 42880
+Explanation: Return type for function &1 in &2 not compatible with CAST TO type.
+
+SQL0454 SQLCODE -454 SQLSTATE 42723
+Explanation: Function &1 in &2 with the same signature already exists.
+
+SQL0455 SQLCODE -455 SQLSTATE 42882
+Explanation: Specific name not same as procedure name.
+
+SQL0456 SQLCODE -456 SQLSTATE 42710
+Explanation: Specific name &3 in &2 already exists.
+
+SQL0457 SQLCODE -457 SQLSTATE 42939
+Explanation: Name &1 in &2 not allowed for function.
+
+SQL0458 SQLCODE -458 SQLSTATE 42883
+Explanation: Function &1 in &2 not found with matching signature.
+
+SQL0461 SQLCODE -461 SQLSTATE 42846
+Explanation: Cast from &1 to &2 not supported.
+
+SQL0463 SQLCODE -463 SQLSTATE 39001
+Explanation: SQLSTATE &4 returned from routine &1 in &2 not valid..
+
+SQL0469 SQLCODE -469 SQLSTATE 42886
+Explanation: IN, OUT, INOUT not valid for parameter &4 in procedure &1 in &2.
+
+SQL0470 SQLCODE -470 SQLSTATE 39002
+Explanation: NULL values not allowed for parameter &4 in procedure.
+
+SQL0473 SQLCODE -473 SQLSTATE 42918
+Explanation: User-defined type &1 cannot be created.
+
+SQL0475 SQLCODE -475 SQLSTATE 42866
+Explanation: RETURNS data type for function &3 in &4 not valid.
+
+SQL0476 SQLCODE -476 SQLSTATE 42725
+Explanation: Function &1 in &2 not unique.
+
+SQL0478 SQLCODE -478 SQLSTATE 42893
+Explanation: Object &1 in &2 of type &3 cannot be dropped.
+
+SQL0483 SQLCODE -483 SQLSTATE 42885
+Explanation: Parameters for function &1 in &2 not same as sourced function.
+
+SQL0484 SQLCODE -484 SQLSTATE 42733
+Explanation: Routine &1 in &2 already exists.
+
+SQL0487 SQLCODE -487 SQLSTATE 38001
+Explanation: SQL statements not allowed.
+
+SQL0490 SQLCODE -490 SQLSTATE 428B7
+Explanation: Numeric value &1 not valid.
+
+SQL0491 SQLCODE -491 SQLSTATE 42601
+Explanation: RETURNS clause required on CREATE FUNCTION statement.
+
+SQL0492 SQLCODE -492 SQLSTATE 42879
+Explanation: Data type for function &1 in &2 not valid for source type.
+
+SQL0501 SQLCODE -501 SQLSTATE 24501
+Explanation: Cursor &1 not open.
+
+SQL0502 SQLCODE -502 SQLSTATE 24502
+Explanation: Cursor &1 already open.
+
+SQL0503 SQLCODE -503 SQLSTATE 42912
+Explanation: Column &3 cannot be updated.
+
+SQL0504 SQLCODE -504 SQLSTATE 34000
+Explanation: Cursor &1 not declared.
+
+SQL0507 SQLCODE -507 SQLSTATE 24501
+Explanation: Cursor &1 not open.
+
+SQL0508 SQLCODE -508 SQLSTATE 24504
+Explanation: Cursor &1 not positioned on locked row.
+
+SQL0509 SQLCODE -509 SQLSTATE 42827
+Explanation: Table &2 in &3 not same as table in cursor &1.
+
+SQL0510 SQLCODE -510 SQLSTATE 42828
+Explanation: Cursor &1 for file &2 is read-only.
+
+SQL0511 SQLCODE -511 SQLSTATE 42829
+Explanation: FOR UPDATE OF clause not valid.
+
+SQL0513 SQLCODE -513 SQLSTATE 42924
+Explanation: Alias &1 in &2 cannot reference another alias.
+
+SQL0514 SQLCODE -514 SQLSTATE 26501
+Explanation: Prepared statement &2 not found.
+
+SQL0516 SQLCODE -516 SQLSTATE 26501
+Explanation: Prepared statement &2 not found.
+
+SQL0517 SQLCODE -517 SQLSTATE 07005
+Explanation: Prepared statement &2 not SELECT statement.
+
+SQL0518 SQLCODE -518 SQLSTATE 07003
+Explanation: Prepared statement &1 not found.
+
+SQL0519 SQLCODE -519 SQLSTATE 24506
+Explanation: Prepared statement &2 in use.
+
+SQL0520 SQLCODE -520 SQLSTATE 42828
+Explanation: Cannot UPDATE or DELETE on cursor &1.
+
+SQL0525 SQLCODE -525 SQLSTATE 51015
+Explanation: Statement not valid on application server.
+
+SQL0527 SQLCODE -527 SQLSTATE 42874
+Explanation: ALWCPYDTA(*NO) specified but temporary result required for &1.
+
+SQL0530 SQLCODE -530 SQLSTATE 23503
+Explanation: Insert or UPDATE value not allowed by referential constraint.
+
+SQL0531 SQLCODE -531 SQLSTATE 23001, 23504
+Explanation: Update prevented by referential constraint.
+
+SQL0532 SQLCODE -532 SQLSTATE 23001, 23504
+Explanation: Delete prevented by referential constraint.
+
+SQL0536 SQLCODE -536 SQLSTATE 42914
+Explanation: Delete not allowed because table referenced in subquery can be affected.
+
+SQL0537 SQLCODE -537 SQLSTATE 42709
+Explanation: Duplicate column name in definition of key.
+
+SQL0538 SQLCODE -538 SQLSTATE 42830
+Explanation: Foreign key attributes do not match parent key.
+
+SQL0539 SQLCODE -539 SQLSTATE 42888
+Explanation: Table does not have primary key.
+
+SQL0541 SQLCODE -541 SQLSTATE 42891
+Explanation: Duplicate UNIQUE constraint already exists.
+
+SQL0543 SQLCODE -543 SQLSTATE 23511
+Explanation: Constraint &1 conflicts with SET NULL or SET DEFAULT rule.
+
+SQL0544 SQLCODE -544 SQLSTATE 23512
+Explanation: CHECK constraint &1 cannot be added.
+
+SQL0545 SQLCODE -545 SQLSTATE 23513
+Explanation: INSERT or UPDATE not allowed by CHECK constraint.
+
+SQL0546 SQLCODE -546 SQLSTATE 42621
+Explanation: CHECK condition of constraint &1 not valid.
+
+SQL0551 SQLCODE -551 SQLSTATE 42501
+Explanation: Not authorized to object &1 in &2 type *&3.
+
+SQL0552 SQLCODE -552 SQLSTATE 42502
+Explanation: Not authorized to &1.
+
+SQL0557 SQLCODE -557 SQLSTATE 42852
+Explanation: Privilege not valid for table or view &1 in &2.
+
+SQL0573 SQLCODE -573 SQLSTATE 42890
+Explanation: Table does not have matching parent key.
+
+SQL0574 SQLCODE -574 SQLSTATE 42894
+Explanation: Default value not valid.
+
+SQL0577 SQLCODE -577 SQLSTATE 38002, 2F002
+Explanation: Modifying SQL data not permitted.
+
+SQL0578 SQLCODE -578 SQLSTATE 2F005
+Explanation: RETURN statement not executed for SQL function &1 in &2.
+
+SQL0579 SQLCODE -579 SQLSTATE 38004, 2F004
+Explanation: Reading SQL data not permitted.
+
+SQL0580 SQLCODE -580 SQLSTATE 42625
+Explanation: At least one result in CASE expression must be not NULL.
+
+SQL0581 SQLCODE -581 SQLSTATE 42804
+Explanation: The results in a CASE expression are not compatible.
+
+SQL0583 SQLCODE -583 SQLSTATE 42845
+Explanation: Use of function &1 in &2 not valid.
+
+SQL0585 SQLCODE -585 SQLSTATE 42732
+Explanation: Library &1 is used incorrectly on the SET PATH statement
+
+SQL0590 SQLCODE -590 SQLSTATE 42734
+Explanation: Name &1 specified in &2 not unique.
+
+SQL0601 SQLCODE -601 SQLSTATE 42710
+Explanation: Object &1 in &2 type *&3 already exists.
+
+SQL0602 SQLCODE -602 SQLSTATE 54008
+Explanation: More than 120 columns specified for CREATE INDEX.
+
+SQL0603 SQLCODE -603 SQLSTATE 23515
+Explanation: Unique index cannot be created because of duplicate keys.
+
+SQL0604 SQLCODE -604 SQLSTATE 42611
+Explanation: Attributes of column not valid.
+
+SQL0607 SQLCODE -607 SQLSTATE 42832
+Explanation: Operation not allowed on system table &1 in &2.
+
+SQL0612 SQLCODE -612 SQLSTATE 42711
+Explanation: &1 is a duplicate column name.
+
+SQL0613 SQLCODE -613 SQLSTATE 54008
+Explanation: Primary or unique key constraint too long.
+
+SQL0614 SQLCODE -614 SQLSTATE 54008
+Explanation: Length of columns for CREATE INDEX too long.
+
+SQL0615 SQLCODE -615 SQLSTATE 55006
+Explanation: Object &1 in &2 type *&3 not dropped. It is in use.
+
+SQL0616 SQLCODE -616 SQLSTATE 42893
+Explanation: &1 in &2 type &3 cannot be dropped with RESTRICT.
+
+SQL0624 SQLCODE -624 SQLSTATE 42889
+Explanation: Table already has primary key.
+
+SQL0628 SQLCODE -628 SQLSTATE 42613
+Explanation: Clauses are mutually exclusive.
+
+SQL0629 SQLCODE -629 SQLSTATE 42834
+Explanation: SET NULL not allowed for referential constraint.
+
+SQL0631 SQLCODE -631 SQLSTATE 54008
+Explanation: Foreign key for referential constraint too long.
+
+SQL0637 SQLCODE -637 SQLSTATE 42614
+Explanation: Duplicate &1 keyword.
+
+SQL0642 SQLCODE -642 SQLSTATE 54021
+Explanation: Maximum number of constraints exceeded.
+
+SQL0658 SQLCODE -658 SQLSTATE 42917
+Explanation: Function cannot be dropped.
+
+SQL0666 SQLCODE -666 SQLSTATE 57005
+Explanation: Estimated query processing time exceeds limit.
+
+SQL0667 SQLCODE -667 SQLSTATE 23520
+Explanation: Foreign key does not match a value in the parent key.
+
+SQL0675 SQLCODE -675 SQLSTATE 42892
+Explanation: Specified delete rule not allowed with existing trigger.
+
+SQL0679 SQLCODE -679 SQLSTATE 57006
+Explanation: Object &1 in &2 type *&3 not created due to pending operation.
+
+SQL0683 SQLCODE -683 SQLSTATE 42842
+Explanation: FOR DATA or CCSID clause not valid for specified type.
+
+SQL0707 SQLCODE -707 SQLSTATE 42939
+Explanation: Name &1 in &2 not allowed for distinct type.
+
+SQL0713 SQLCODE -713 SQLSTATE 42815
+Explanation: Host variable for &2 is NULL.
+
+SQL0724 SQLCODE -724 SQLSTATE 54038
+Explanation: Too many cascaded trigger programs.
+
+SQL0751 SQLCODE -751 SQLSTATE 42987
+Explanation: SQL statement &1 not allowed in stored procedure or trigger.
+
+SQL0752 SQLCODE -752 SQLSTATE 0A001
+Explanation: Connection cannot be changed. Reason code is &1.
+
+SQL0773 SQLCODE -773 SQLSTATE 20000
+Explanation: Case not found for CASE statement.
+
+SQL0774 SQLCODE -774 SQLSTATE 2D522
+Explanation: Statement cannot be executed within a compound SQL statement.
+
+SQL0775 SQLCODE -775 SQLSTATE 42910
+Explanation: Statement not allowed in a compound SQL statement.
+
+SQL0776 SQLCODE -776 SQLSTATE 428D4
+Explanation: Cursor &1 specified in FOR statement not allowed.
+
+SQL0777 SQLCODE -777 SQLSTATE 42919
+Explanation: Nested compound statements not allowed.
+
+SQL0778 SQLCODE -778 SQLSTATE 428D5
+Explanation: End label &1 not same as begin label.
+
+SQL0779 SQLCODE -779 SQLSTATE 42736
+Explanation: Label &1 specified on LEAVE statement not valid.
+
+SQL0780 SQLCODE -780 SQLSTATE 428D6
+Explanation: UNDO specified for a handler and ATOMIC not specified.
+
+SQL0781 SQLCODE -781 SQLSTATE 42737
+Explanation: Condition &1 specified in handler not defined.
+
+SQL0782 SQLCODE -782 SQLSTATE 428D7
+Explanation: Condition value &1 specified in handler not valid.
+
+SQL0783 SQLCODE -783 SQLSTATE 42738
+Explanation: Select list for cursor &1 in FOR statement not valid.
+
+SQL0784 SQLCODE -784 SQLSTATE 42860
+Explanation: Check constraint &1 cannot be dropped.
+
+SQL0785 SQLCODE -785 SQLSTATE 428D8
+Explanation: Use of SQLCODE or SQLSTATE not valid.
+
+SQL0802 SQLCODE -802 SQLSTATE 22003, 22012, 22023, 22504
+Explanation: Data conversion or data mapping error.
+
+SQL0803 SQLCODE -803 SQLSTATE 23505
+Explanation: Duplicate key value specified.
+
+SQL0804 SQLCODE -804 SQLSTATE 07002
+Explanation: SQLDA not valid.
+
+SQL0805 SQLCODE -805 SQLSTATE 51002
+Explanation: SQL package &1 in &2 not found.
+
+SQL0811 SQLCODE -811 SQLSTATE 21000
+Explanation: Result of SELECT INTO or subquery more than one row.
+
+SQL0818 SQLCODE -818 SQLSTATE 51003
+Explanation: Consistency tokens do not match.
+
+SQL0822 SQLCODE -822 SQLSTATE 51004
+Explanation: Address in SQLDA not valid.
+
+SQL0827 SQLCODE -827 SQLSTATE 42862
+Explanation: &1 in &2 type *SQLPKG cannot be accessed.
+
+SQL0840 SQLCODE -840 SQLSTATE 54004
+Explanation: Number of selected items exceeds 8000.
+
+SQL0842 SQLCODE -842 SQLSTATE 08002
+Explanation: Connection already exists.
+
+SQL0843 SQLCODE -843 SQLSTATE 08003
+Explanation: Connection does not exist.
+
+SQL0858 SQLCODE -858 SQLSTATE 08501
+Explanation: Cannot disconnect relational database due to LU 6.2 protected conversation.
+
+SQL0862 SQLCODE -862 SQLSTATE 55029
+Explanation: Local program attempted to connect to a remote relational database.
+
+SQL0871 SQLCODE -871 SQLSTATE 54019
+Explanation: Too many CCSID values specified.
+
+SQL0900 SQLCODE -900 SQLSTATE 08003
+Explanation: Application process not in a connected state.
+
+SQL0901 SQLCODE -901 SQLSTATE 58004
+Explanation: SQL system error.
+
+SQL0904 SQLCODE -904 SQLSTATE 57011
+Explanation: Resource limit exceeded.
+
+SQL0906 SQLCODE -906 SQLSTATE 24514
+Explanation: Operation not performed because of previous error.
+
+SQL0907 SQLCODE -907 SQLSTATE 27000
+Explanation: Attempt to change same row twice.
+
+SQL0910 SQLCODE -910 SQLSTATE 57007
+Explanation: Object &1 in &2 type *&3 has a pending change.
+
+SQL0913 SQLCODE -913 SQLSTATE 57033
+Explanation: Row or object &1 in &2 type *&3 in use.
+
+SQL0917 SQLCODE -917 SQLSTATE 42969
+Explanation: Package not created.
+
+SQL0918 SQLCODE -918 SQLSTATE 51021
+Explanation: Rollback required.
+
+SQL0950 SQLCODE -950 SQLSTATE 42705
+Explanation: Relational database &1 not in relational database directory.
+
+SQL0951 SQLCODE -951 SQLSTATE 55007
+Explanation: Object &1 in &2 not altered. It is in use.
+
+SQL0952 SQLCODE -952 SQLSTATE 57014
+Explanation: Processing of the SQL statement ended by ENDRDBRQS command.
+
+SQL0969 SQLCODE -969 SQLSTATE 58033
+Explanation: Unexpected client driver error.
+
+SQL0971 SQLCODE -971 SQLSTATE 57011
+Explanation: Referential constraint &4 in check pending state.
+
+SQL5001 SQLCODE -5001 SQLSTATE 42703
+Explanation: Column qualifier &2 undefined.
+
+SQL5002 SQLCODE -5002 SQLSTATE 42812
+Explanation: Collection must be specified for table &1.
+
+SQL5003 SQLCODE -5003 SQLSTATE 42922
+Explanation: Cannot perform operation under commitment control.
+
+SQL5005 SQLCODE -5005 SQLSTATE 42815
+Explanation: Operator &4 not consistent with operands.
+
+SQL5012 SQLCODE -5012 SQLSTATE 42618
+Explanation: Host variable not a numeric with zero scale.
+
+SQL5016 SQLCODE -5016 SQLSTATE 42833
+Explanation: Object name &1 not valid for naming option.
+
+SQL5021 SQLCODE -5021 SQLSTATE 42930
+Explanation: FOR UPDATE OF column &1 also in ORDER BY.
+
+SQL5023 SQLCODE -5023 SQLSTATE 26510
+Explanation: Duplicate statement name in DECLARE CURSOR.
+
+SQL5024 SQLCODE -5024 SQLSTATE 42618
+Explanation: Host variable &1 not character.
+
+SQL5047 SQLCODE -5047 SQLSTATE 42616
+Explanation: Error processing SRTSEQ or LANGID parameter.
+
+SQL5051 SQLCODE -5051 SQLSTATE 42875
+Explanation: Incorrect qualifier.
+
+SQL7001 SQLCODE -7001 SQLSTATE 42858
+Explanation: File &1 in &2 not database file.
+
+SQL7002 SQLCODE -7002 SQLSTATE 42847
+Explanation: Override parameter not valid.
+
+SQL7003 SQLCODE -7003 SQLSTATE 42857
+Explanation: File &1 in &2 has more than one format.
+
+SQL7006 SQLCODE -7006 SQLSTATE 55018
+Explanation: Cannot drop collection &1.
+
+SQL7007 SQLCODE -7007 SQLSTATE 51009
+Explanation: COMMIT or ROLLBACK not valid.
+
+SQL7008 SQLCODE -7008 SQLSTATE 55019
+Explanation: &1 in &2 not valid for operation.
+
+SQL7010 SQLCODE -7010 SQLSTATE 42850
+Explanation: Logical file &1 in &2 not valid for CREATE VIEW.
+
+SQL7011 SQLCODE -7011 SQLSTATE 42851
+Explanation: &1 in &2 not table, view, or physical file.
+
+SQL7017 SQLCODE -7017 SQLSTATE 42971
+Explanation: Commitment control is already active to a DDM target.
+
+SQL7018 SQLCODE -7018 SQLSTATE 42970
+Explanation: COMMIT HOLD or ROLLBACK HOLD not allowed.
+
+SQL7021 SQLCODE -7021 SQLSTATE 57043
+Explanation: Local program attempting to run on application server.
+
+SQL7022 SQLCODE -7022 SQLSTATE 42977
+Explanation: User &1 not the same as current user &2 for connect to local relational database.
+
+SQL7024 SQLCODE -7024 SQLSTATE 42876
+Explanation: Index cannot be created because of CCSID incompatibility.
+
+SQL7026 SQLCODE -7026 SQLSTATE 42896
+Explanation: Auxiliary storage pool not found.
+
+SQL7027 SQLCODE -7027 SQLSTATE 42984
+Explanation: Unable to grant to a view.
+
+SQL7028 SQLCODE -7028 SQLSTATE 42944
+Explanation: Unable to CHGOBJOWN for primary group.
+
+SQL7029 SQLCODE -7029 SQLSTATE 428B8
+Explanation: New name &3 is not valid.
+
+SQL7031 SQLCODE -7031 SQLSTATE 54044
+Explanation: Sort sequence table &1 too long.
+
+SQL7032 SQLCODE -7032 SQLSTATE 42904
+Explanation: SQL procedure &1 in &2 not created.
+
+SQL7033 SQLCODE -7033 SQLSTATE 42923
+Explanation: Alias name &1 in &2 not allowed.
+
+SQL7034 SQLCODE -7034 SQLSTATE 42926
+Explanation: LOB locators are not allowed with COMMIT(*NONE).
+
+SQL7037 SQLCODE -7037 SQLSTATE 42835
+Explanation: Data in a distributed file &1 in &2 cannot be redistributed.
+
+SQL7038 SQLCODE -7038 SQLSTATE 429B7
+Explanation: Delete cascade not valid for &1 in &2.
+
+SQL7941 SQLCODE -7941 SQLSTATE 42981
+Explanation: Application process not at commit boundary.
+
+SQL9012 SQLCODE -9012 SQLSTATE 42968
+Explanation: DB2 UDB Query Manager and SQL Development Kit not available.
+
+SQ30000 SQLCODE -30000 SQLSTATE 58008
+Explanation: Distributed Relational Database Architecture (DRDA) protocol error.
+
+SQ30001 SQLCODE -30001 SQLSTATE 57042
+Explanation: Call to distributed SQL program not allowed.
+
+SQ30020 SQLCODE -30020 SQLSTATE 58009
+Explanation: Distributed Relational Database Architecture (DRDA) protocol error.
+
+SQ30021 SQLCODE -30021 SQLSTATE 58010
+Explanation: Distributed relational database not supported by the remote system.
+
+SQ30040 SQLCODE -30040 SQLSTATE 57012
+Explanation: DDM resource &2 at relational database &1 not available.
+
+SQ30041 SQLCODE -30041 SQLSTATE 57013
+Explanation: DDM resources at relational database &1 not available.
+
+SQ30050 SQLCODE -30050 SQLSTATE 58011
+Explanation: DDM command &1 is not valid while bind process is in progress.
+
+SQ30051 SQLCODE -30051 SQLSTATE 58012
+Explanation: Bind process for specified package name and consistency token not active.
+
+SQ30052 SQLCODE -30052 SQLSTATE 42932
+Explanation: Program preparation assumptions not correct.
+
+SQ30053 SQLCODE -30053 SQLSTATE 42506
+Explanation: Not authorized to create package for owner &1.
+
+SQ30060 SQLCODE -30060 SQLSTATE 08004
+Explanation: User not authorized to relational database &1.
+
+SQ30061 SQLCODE -30061 SQLSTATE 08004
+Explanation: Relational database &1 not found.
+
+SQ30070 SQLCODE -30070 SQLSTATE 58014
+Explanation: Distributed Data Management (DDM) command &1 not supported.
+
+SQ30071 SQLCODE -30071 SQLSTATE 58015
+Explanation: Distributed Data Management (DDM) object &1 not supported.
+
+SQ30072 SQLCODE -30072 SQLSTATE 58016
+Explanation: Distributed Data Management (DDM) parameter &1 not supported.
+
+SQ30073 SQLCODE -30073 SQLSTATE 58017
+Explanation: Distributed Data Management (DDM) parameter value &1 not supported.
+
+SQ30074 SQLCODE -30074 SQLSTATE 58018
+Explanation: Distributed Data Management (DDM) reply message &1 not supported.
+
+SQ30080 SQLCODE -30080 SQLSTATE 08001
+Explanation: Communication error occurred during distributed database processing.
+
+SQ30089 SQLCODE -30089 SQLSTATE 08001
+Explanation: Communication error occurred during DB2 Multisystem processing.
+
+SQ30090 SQLCODE -30090 SQLSTATE 25000, 2D528, 2D529
+Explanation: Change request not valid for read-only application server.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+https://www.ibm.com/docs/en/db2-for-zos/13.0.0?topic=codes-error-sql#db2z_errorsqlcodes__sqlcodes-n__title__1
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+https://www.ibm.com/docs/en/db2-for-zos/13.0.0?topic=codes-db2-reason
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
