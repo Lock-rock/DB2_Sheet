@@ -36,3 +36,13 @@ WHERE
     TABSCHEMA = 'YOUR_SCHEMA' 
     AND TABNAME = 'YOUR_TABLE';
 ***************************************************************************************************
+
+
+SELECT DISTINCT
+    'GRANT SELECT ON TABLE ' 
+    || RTRIM(TABSCHEMA) 
+    || '.' 
+    || RTRIM(TABNAME) 
+    || ' TO USER RBAT;'
+FROM SYSCAT.TABLES
+WHERE TABSCHEMA = 'SIEBEL';
