@@ -1170,4 +1170,18 @@ SQL1063N  DB2START processing was successful.
 
 ################ make connection in TOAD and connect. ######################
 
+################################################################################
+################ configuration in hadr replication setup  ######################
+################################################################################
+after db restoreation :
 
+connect to database :
+db2 connect to solixdb
+
+and add configurations
+in HADR_TARGET_LIST add first ip of other dr and host ip of replication prod
+db2 "update db cfg for SOLIXDB using HADR_TARGET_LIST 10.201.77.176:60032|10.10.2.193:60030"
+db2 update db cfg for SOLIXDB using HADR_REMOTE_SVC 60030
+db2 update db cfg for SOLIXDB using HADR_REMOTE_HOST 10.10.2.193
+db2 update db cfg for SOLIXDB using HADR_LOCAL_SVC 60031
+db2 update db cfg for SOLIXDB using HADR_LOCAL_HOST 10.10.2.176
