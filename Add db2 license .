@@ -61,3 +61,29 @@ resutl:
 		Enforcement policy:               "Soft Stop"
 
 Software path in PC: C:\Users\kuldeeprawat.ext\Desktop\Software\db2 licence
+
+##################################################################################
+######################## another way  ############################################
+##################################################################################
+
+
+Go to this dirctory C:\Users\kuldeeprawat.ext\Desktop\Software\db2 licence and copy .lic file 
+
+and add this 
+
+db2licm -a /path/db2aese_c.lic
+
+Output:
+LIC1402I  License added successfully.
+
+
+LIC1426I  This product is now licensed for use as outlined in your License Agreement.  USE OF THE PRODUCT CONSTITUTES ACCEPTANCE OF THE TERMS OF THE IBM LICENSE AGREEMENT, LOCATED IN THE FOLLOWING DIRECTORY: "/db2/IBM/db2/V10.5/license/en_US.iso88591"
+$
+$
+$ db2licm -l
+Product name:                     "DB2 Advanced Enterprise Server Edition"
+License type:                     "CPU Option"
+Expiry date:                      "Permanent"
+Product identifier:               "db2aese"
+Version information:              "10.5"
+Enforcement policy:               "Soft Stop"
