@@ -1,0 +1,2 @@
+find any error:
+grep -E "LEVEL: (Error|Severe|Critical)" db2diag.log
