@@ -51,6 +51,6 @@ db2 get dbm cfg | grep -i sysmon
 output like this :
 SYSMon group name (SYSMON_GROUP) = db2mon
 
-give ownership or change :
-usermod -aG db2mon guest
+Notes:
+change .profile of the primary database with other user porfle.
 
