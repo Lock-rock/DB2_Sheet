@@ -46,7 +46,7 @@ db2 " select count (1) from syscat.tables where TABSCHEMA='MARUTI_SUZUKI'"
 
 
 
-=====================================================================================================================================================================
+=================================================================================================================================================================================================================
 db2 "EXPORT TO employees.ixf OF IXF SELECT * FROM hr.employees" > export.log
 
 --DB2 script: DB2 Import Command Explanation for CSV Data Load:
@@ -58,9 +58,11 @@ import from "E:\load_table\Marinehimanshu.csv of del modified by identityignore 
 db2 IMPORT FROM "F:\CSV\MISRPA.TPA_PEGA_CLAIMS_DATA.csv" OF DEL REPLACE INTO MISRPA.TPA_PEGA_CLAIMS_DATA
 
 --DB2 script: For load large data in table:
-db2 "load from \"F:\CSV\MISRPA.IN_HOUSE_PEGA_DATA.csv\"
-of del 
-messages \"F:\CSV\load.log\" 
-insert into MISRPA.IN_HOUSE_PEGA_DATA"
+db2 "load from \"F:\CSV\MISRPA.IN_HOUSE_PEGA_DATA.csv\" of del messages \"F:\CSV\load.log\" insert into MISRPA.IN_HOUSE_PEGA_DATA"
 
+=================================================================================================================================================================================================================
+Export a table :
+db2 "export to /backup/backup/bkp_kul/SBUEBK_MASTER.ixf of ixf messages /backup/backup/bkp_kul/SBUEBK_MASTER.msg select * from INTERMEDIARY_ONBOARDING.SBUEBK_MASTER"
 
+Import a table with data.
+db2 "LOAD FROM /backup/backup/bkp_kul/AGENTTIEUP.ixf OF IXF MODIFIED BY IDENTITYOVERRIDE INSERT INTO INTERMEDIARY_ONBOARDING_202060802.AGENTTIEUP"
