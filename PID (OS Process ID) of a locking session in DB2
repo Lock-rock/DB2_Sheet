@@ -1,0 +1,34 @@
+Step 1: Identify the blocking application handle
+
+db2pd -db <DBNAME> -locks showlocks wait
+
+Look for the AppHandl (application handle) of the blocking session. The db2pd -locks output shows lock holders and waiters
+Example:
+AppHandl Status
+12345   Lock Waiter 
+67890   Lock Holder
+
+Here, 67890 is the blocking application handle.
+
+Step 2: Map the application handle to a PID
+db2pd -db <DBNAME> -agents app=67890
+
+This displays agent information, including the associated OS PID
+Typical output:
+
+AppHandl AgentID TID    PID
+67890    1024    56789  23456
+PID = 23456
+
+
+Step 3: Verify on the operating system
+ps -fp 23456
+
+This helps identify the DB2 EDU or client process involved.
+
+Step 4: Force the blocking session (if appropriate)
+db2 force application (67890)
+
+
+
+db2 list applications |grep -E toad | wc -l
