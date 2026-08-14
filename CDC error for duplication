@@ -3,7 +3,7 @@ IBM InfoSphere Data Replication applied a batch of 1 rows and the JDBC driver re
 
 
 db2 connect to mis
-db2 "SELECT count(*) FROM SIEBEL.S_INSCLM_UW WHERE LAST_UPD_BY = '1-36LDXQHU'"
+db2 "SELECT count(*) FROM SIEBEL.S_INSCLM_UW WHERE ROW_ID = '1-8CHOS8QN'"
 
 
 db2 "DELETE FROM SIEBEL.S_INSCLM_UW WHERE ROW_ID = '1-8CHOS8QN'"
