@@ -1,0 +1,180 @@
+First login:
+
+user :su - bipinst1
+passwd:#########
+
+Now Check hostname:
+hostname 
+
+Output: siebel_newha2
+
+Now add hostname in db2nodes.cfg  (note: find in user dir. like /db2/home/bipinst1/sqllib/db2nodes.cfg)
+
+Output like:
+0 siebel_newha2 0
+
+here is home and DB2 installation dir.
+
+Home dir:  /db2/home/bipinst1/sqllib/db2nodes.cfg
+db2 dir:/db2/IBM/V10.5/instance
+
+Second  update user: in db2 dir.
+
+cd /db2/IBM/V10.5/instance
+./db2iupdt -u bipinst1 bipinst1
+
+Output:
+# ./db2iupdt -u bipinst1 bipinst1
+DBI1446I  The db2iupdt command is running.
+
+
+DB2 installation is being initialized.
+
+ Total number of tasks to be performed: 4
+Total estimated time for all tasks to be performed: 309 second(s)
+
+Task #1 start
+Description: Setting default global profile registry variables
+Estimated time 1 second(s)
+Task #1 end
+
+Task #2 start
+Description: Initializing instance list
+Estimated time 5 second(s)
+Task #2 end
+
+Task #3 start
+Description: Configuring DB2 instances
+Estimated time 300 second(s)
+Task #3 end
+
+Task #4 start
+Description: Updating global profile registry
+Estimated time 3 second(s)
+Task #4 end
+
+The execution completed successfully.
+
+For more information see the DB2 installation log at
+"/tmp/db2iupdt.log.12911092".
+DBI1070I  Program db2iupdt completed successfully.
+
+Now start database:
+db2start
+
+Stop hadr:
+db2 stop hadr on db BIPDB
+
+check hadr config:
+db2 get db cfg for BIPDB | grep HADR
+
+4. Check and change hadr blank in server;
+
+   db2 update db cfg for BIPDB using HADR_LOCAL_HOST NULL
+   db2 update db cfg for BIPDB using HADR_LOCAL_SVC NULL
+   db2 update db cfg for BIPDB using HADR_REMOTE_HOST NULL
+   db2 update db cfg for BIPDB using HADR_REMOTE_SVC NULL
+   db2 update db cfg for BIPDB using HADR_TARGET_LIST NULL
+   db2 update db cfg for BIPDB using HADR_SYNCMODE NULL
+   db2 update db cfg for BIPDB using LOGINDEXBUILD ON 
+   
+Output:
+
+ HADR database role                                      = STANDARD
+ HADR local host name                  (HADR_LOCAL_HOST) =
+ HADR local service name                (HADR_LOCAL_SVC) =
+ HADR remote host name                (HADR_REMOTE_HOST) =
+ HADR remote service name              (HADR_REMOTE_SVC) =
+ HADR instance name of remote server  (HADR_REMOTE_INST) = bipinst1
+ HADR timeout value                       (HADR_TIMEOUT) = 120
+ HADR target list                     (HADR_TARGET_LIST) =
+ HADR log write synchronization mode     (HADR_SYNCMODE) = ASYNC
+ HADR spool log data limit (4KB)      (HADR_SPOOL_LIMIT) = AUTOMATIC(25600)
+ HADR log replay delay (seconds)     (HADR_REPLAY_DELAY) = 0
+ HADR peer window duration (seconds)  (HADR_PEER_WINDOW) = 0
+
+Now run this command to open database:
+db2 rollforward database BIPDB to end of logs and complete
+
+Output:
+db2 rollforward database BIPDB to end of logs and complete
+
+                                 Rollforward Status
+
+ Input database alias                   = BIPDB
+ Number of members have returned status = 1
+
+ Member ID                              = 0
+ Rollforward status                     = not pending
+ Next log file to be read               =
+ Log files processed                    = S0005495.LOG - S0005829.LOG
+ Last committed transaction             = 2026-08-17-06.02.11.000000 UTC
+
+DB20000I  The ROLLFORWARD command completed successfully.
+
+Now to connect to database:
+db2 connect to BIPDB
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = BIPINST1
+ Local database alias   = BIPDB
+
+Check port for connection:
+cat /etc/services |grep -E bipinst1
+
+output like:
+db2c_bipinst1  50002/tcp # DB2 Nermarine connection service port
+
+Now configure port IP and tcpip:
+db2 update db cfg for BIPDB using HADR_LOCAL_HOST 10.10.2.187
+db2 update dbm cfg using SVCENAME 60012
+db2set DB2COMM=TCPIP
+
+output:
+DB20000I  The UPDATE DATABASE MANAGER CONFIGURATION command completed
+successfully.
+SQL1362W  One or more of the parameters submitted for immediate modification
+were not changed dynamically. Client changes will not be effective until the
+next time the application is started or the TERMINATE command has been issued.
+Server changes will not be effective until the next DB2START command.
+
+
+check port listion:
+netstat -na |grep -p LISTEN*
+
+output:
+
+cat /etc/services |grep -E bipinst1
+db2c_bipinst1  50002/tcp # DB2 Nermarine connection service port
+
+add new port when not find open port:
+DB2_bipinst1_5  32769/tcp
+
+Now db2stop:
+db2stop
+
+if not stop then kill all applications connections:
+db2 force application all;
+
+And again try db2stop
+
+after shutdown then restart database:
+db2start
+
+db2 connect to BIPDB
+
+   Database Connection Information
+
+ Database server        = DB2/AIX64 10.5.10
+ SQL authorization ID   = BIPINST1
+ Local database alias   = BIPDB
+
+db2set -all
+[i] DB2_STANDBY_ISO=UR
+[i] DB2_HADR_ROS=YES
+[i] DB2COMM=TCPIP
+[g] DB2SYSTEM=newsiebeldbsec
+[g] DB2INSTDEF=db2iusr
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
