@@ -29,9 +29,6 @@ IMPORT FROM OEM_TTIB_YHMEIHSML_KYC_UPLOAD_DOC.del OF DEL
                 MODIFIED BY lobsinfile
                 INSERT INTO newtable
 
-
-
-
 FOR DDL_BACKUP For schema:
 db2look -d EMARINE -z MARUTI_SUZUKI -e -xd -o /backup/New/SIEBEL_SCHEMA_DDL.ddl   ------export 
 
@@ -46,7 +43,7 @@ db2 " select count (1) from syscat.tables where TABSCHEMA='MARUTI_SUZUKI'"
 
 
 
-=================================================================================================================================================================================================================
+============================================================================================================================================================================================================================================================================
 db2 "EXPORT TO employees.ixf OF IXF SELECT * FROM hr.employees" > export.log
 
 --DB2 script: DB2 Import Command Explanation for CSV Data Load:
@@ -60,9 +57,40 @@ db2 IMPORT FROM "F:\CSV\MISRPA.TPA_PEGA_CLAIMS_DATA.csv" OF DEL REPLACE INTO MIS
 --DB2 script: For load large data in table:
 db2 "load from \"F:\CSV\MISRPA.IN_HOUSE_PEGA_DATA.csv\" of del messages \"F:\CSV\load.log\" insert into MISRPA.IN_HOUSE_PEGA_DATA"
 
-=================================================================================================================================================================================================================
+===========================================================================================================================================================================================================================================================================
 Export a table :
 db2 "export to /backup/backup/bkp_kul/SBUEBK_MASTER.ixf of ixf messages /backup/backup/bkp_kul/SBUEBK_MASTER.msg select * from INTERMEDIARY_ONBOARDING.SBUEBK_MASTER"
 
 Import a table with data.
 db2 "LOAD FROM /backup/backup/bkp_kul/AGENTTIEUP.ixf OF IXF MODIFIED BY IDENTITYOVERRIDE INSERT INTO INTERMEDIARY_ONBOARDING_202060802.AGENTTIEUP"
+
+
+===========================================================================================================================================================================================================================================================================
+
+Source DB se Export:
+db2 "export to CSS_ROLE_LOCALES.ixf of ixf select * from DEV_BIP_T.CSS_ROLE_LOCALES"
+
+Target DB me Table Create Karo:
+Agar target schema BIP_USER hai, to pehle table create karo:
+
+db2 "CREATE TABLE BIP_USER.CSS_ROLE_LOCALES LIKE DEV_BIP_T.CSS_ROLE_LOCALES;
+
+Import into Different Schema:
+db2 "IMPORT FROM CSS_ROLE_LOCALES.ixf OF IXF INSERT INTO BIP_USER.CSS_ROLE_LOCALES"
+
+Ya agar table khali hai aur data replace karna hai:
+db2 "IMPORT FROM CSS_ROLE_LOCALES.ixf OF IXF REPLACE INTO BIP_USER.CSS_ROLE_LOCALES"
+
+Faster Option (LOAD)
+
+Large data ke liye:
+db2 "LOAD FROM CSS_ROLE_LOCALES.ixf OF IXF INSERT INTO BIP_USER.CSS_ROLE_LOCALES"
+
+Load ke baad zarurat pade to:
+SET INTEGRITY FOR BIP_USER.CSS_ROLE_LOCALES IMMEDIATE CHECKED;
+
+===========================================================================================================================================================================================================================================================================
+
+
+
+
