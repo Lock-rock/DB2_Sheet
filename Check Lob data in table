@@ -1,0 +1,49 @@
+DB2 me check karne ke liye ki kisi table me LOB columns (BLOB, CLOB, DBCLOB) hain ya nahi, ye query chalao:
+
+SELECT COLNAME,
+       TYPENAME,
+       LENGTH
+FROM SYSCAT.COLUMNS
+WHERE TABSCHEMA = 'DEV_BIP_T'
+  AND TABNAME   = 'CSS_ROLE_LOCALES'
+  AND TYPENAME IN ('BLOB','CLOB','DBCLOB');
+
+Agar rows return hoti hain Jaise:
+
+COLNAME        TYPENAME
+-------------  --------
+DOCUMENT       CLOB
+IMAGE_DATA     BLOB
+
+To table me LOB columns hain.
+
+Agar koi row return nahi hoti
+To table me LOB columns nahi hain.
+Table ke saare columns dekhne ke liye
+
+SELECT COLNAME,
+       TYPENAME,
+       LENGTH
+FROM SYSCAT.COLUMNS
+WHERE TABSCHEMA = 'DEV_BIP_T'
+  AND TABNAME   = 'CSS_ROLE_LOCALES';
+
+Pure schema me kaunsi tables LOB use karti hain:
+
+SELECT DISTINCT TABSCHEMA,
+                TABNAME
+FROM SYSCAT.COLUMNS
+WHERE TABSCHEMA = 'DEV_BIP_T'
+  AND TYPENAME IN ('BLOB','CLOB','DBCLOB')
+ORDER BY TABNAME;
+
+
+Agar sirf quickly check karna hai to:
+
+SELECT COUNT(*)
+FROM SYSCAT.COLUMNS
+WHERE TABSCHEMA='DEV_BIP_T'
+  AND TABNAME='CSS_ROLE_LOCALES'
+  AND TYPENAME IN ('BLOB','CLOB','DBCLOB');
+
+Result 0 aaye to LOB nahi hai, 0 se bada aaye to LOB column present hai.
