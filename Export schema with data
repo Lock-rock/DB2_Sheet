@@ -1,0 +1,65 @@
+First take ddl of schema:
+
+db2look -d BIPDB -z DEV_BIP -e -o DEV_BIP.sql
+Note change name in sql file for schema name and save.
+
+now execute the sql file:
+
+db2 -tvf DEV_BIP.sql
+
+If you want to move data then :
+
+use this:
+db2move BIPDB EXPORT -sn DEV_BIP
+
+after that:
+import data : db2move BIPDB LOAD (in same schema you can run directe but if you load in diffrent schema the you will change in db2move.list file with schema name)
+
+then run :
+db2move BIPDB LOAD
+
+====================================================================================================================================================================================================================================================================
+after load you check table then show this error:
+
+SQL0668N Operation not allowed for reason code "1"
+on table "DEV_BIP_T.CSS_ROLE_LOCALES"
+SQLSTATE=57016
+
+After that table in going "SQL0668N reason code "1" ka matlab hota hai ki table SET INTEGRITY pending state"
+
+now fix it:
+
+Check table status:
+
+SELECT TABSCHEMA,
+       TABNAME,
+       STATUS
+FROM SYSCAT.TABLES
+WHERE TABSCHEMA='DEV_BIP_T'
+  AND TABNAME='CSS_ROLE_LOCALES';
+
+
+Fix:
+SET INTEGRITY FOR DEV_BIP_T.CSS_ROLE_LOCALES IMMEDIATE CHECKED;
+
+if many table in pending state:
+SELECT 'SET INTEGRITY FOR '
+       || RTRIM(TABSCHEMA) || '.'
+       || RTRIM(TABNAME)
+       || ' IMMEDIATE CHECKED;'
+FROM SYSCAT.TABLES
+WHERE STATUS='C';
+
+Load ke baad common fix:
+Agar aapne db2move LOAD use kiya hai, to load complete hone ke baad aksar ye chalana padta hai:
+
+SET INTEGRITY FOR ALL IMMEDIATE CHECKED;
+
+
+
+
+
+
+
+
+
