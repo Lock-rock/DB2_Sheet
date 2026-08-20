@@ -90,7 +90,35 @@ Load ke baad zarurat pade to:
 SET INTEGRITY FOR BIP_USER.CSS_ROLE_LOCALES IMMEDIATE CHECKED;
 
 ===========================================================================================================================================================================================================================================================================
+Export with LOB Data:
 
+db2 "EXPORT TO CSS_ROLE_LOCALES.ixf OF IXF SELECT * FROM DEV_BIP_T.CSS_ROLE_LOCALES"
+
+Ya explicitly LOB files generate karne ke liye:
+db2 "EXPORT TO CSS_ROLE_LOCALES.ixf OF IXF LOBS TO ./lobdir SELECT * FROM DEV_BIP_T.CSS_ROLE_LOCALES"
+
+Import into Different Schema
+
+Pehle target schema me table create karo:
+CREATE TABLE NEW_SCHEMA.CSS_ROLE_LOCALES LIKE DEV_BIP_T.CSS_ROLE_LOCALES;
+
+Phir import:
+db2 "IMPORT FROM CSS_ROLE_LOCALES.ixf OF IXF
+LOBS FROM ./lobdir
+INSERT INTO NEW_SCHEMA.CSS_ROLE_LOCALES"
+
+Ya large data ho to:
+db2 "LOAD FROM CSS_ROLE_LOCALES.ixf OF IXF LOBS FROM ./lobdir INSERT INTO NEW_SCHEMA.CSS_ROLE_LOCALES"
+
+Table me LOB columns check karne ke liye:
+
+SELECT COLNAME, TYPENAME
+FROM SYSCAT.COLUMNS
+WHERE TABSCHEMA='DEV_BIP_T'
+  AND TABNAME='CSS_ROLE_LOCALES'
+  AND TYPENAME IN ('BLOB','CLOB','DBCLOB');
+
+===========================================================================================================================================================================================================================================================================
 
 
 
