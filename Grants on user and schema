@@ -43,3 +43,18 @@ FROM SYSCAT.ROUTINES
 WHERE ROUTINESCHEMA = 'AGENT_PORTAL'
   AND ROUTINETYPE = 'P'
 " > jkb1.sql
+
+*****************************************************************************************************************************************************************************************************************************
+For revoke permission:
+
+db2 -x "
+SELECT DISTINCT
+  'REVOKE EXECUTE ON PROCEDURE "'
+  || RTRIM(ROUTINESCHEMA)
+  || '"."'
+  || RTRIM(ROUTINENAME)
+  || '" FROM USER JKB RESTRICT;'
+FROM SYSCAT.ROUTINES
+WHERE ROUTINESCHEMA = 'AGENT_PORTAL'
+  AND ROUTINETYPE = 'P'
+" > jkbr.sql
