@@ -29,3 +29,17 @@ ALTER DEFAULT PRIVILEGES (Recommended if supported): it support v10.5 upper.
 
 ALTER DEFAULT PRIVILEGES IN SCHEMA MYSCHEMA GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO USER APPUSER;
 
+*****************************************************************************************************************************************************************************************************************************
+For Execute on procedure:
+
+db2 -tnx "
+SELECT DISTINCT
+       'GRANT EXECUTE ON PROCEDURE \"'
+       || RTRIM(ROUTINESCHEMA)
+       || '\".\"'
+       || RTRIM(ROUTINENAME)
+       || '\" TO USER jkb;'
+FROM SYSCAT.ROUTINES
+WHERE ROUTINESCHEMA = 'AGENT_PORTAL'
+  AND ROUTINETYPE = 'P'
+" > jkb1.sql
