@@ -32,3 +32,17 @@ db2 force application (67890)
 
 
 db2 list applications |grep -E toad | wc -l
+
+
+========================================================================================================================================================================================================
+idle sessions:
+
+db2 "SELECT APPLICATION_HANDLE,
+            UOW_ID,
+            ACTIVITY_STATE,
+            TOTAL_ACT_TIME,
+            STMT_TEXT
+     FROM TABLE(MON_GET_ACTIVITY(NULL, -2)) AS T
+     WHERE ACTIVITY_STATE <> 'IDLE'
+     ORDER BY TOTAL_ACT_TIME DESC
+     FETCH FIRST 20 ROWS ONLY"
