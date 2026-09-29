@@ -1,1 +1,44 @@
+Check Federation in db2
+
 db2 get dbm cfg |grep -i FEDERATED
+
+================================================================================================================================================================================================================
+To check whether DB2 Federation is configured and available:
+1. Check Federated Parameter
+db2 get db cfg for <DBNAME> | grep -i federated
+
+Example output:
+Federated Database System Support (FEDERATED) = YES
+
+2. Check Existing Wrappers
+Connect to the database:
+db2 connect to <DBNAME>
+
+SELECT WRAPNAME, LIBRARY FROM SYSCAT.WRAPPERS;
+
+Example:
+DRDA
+ORACLE
+
+3. Check Federated Servers
+
+SELECT SERVERNAME,
+       WRAPNAME,
+       SERVERTYPE,
+       VERSION
+FROM SYSCAT.SERVERS;
+
+4. Check Nicknames
+
+Nicknames are DB2 objects that point to remote Oracle tables.
+SELECT TABSCHEMA,
+       TABNAME
+FROM SYSCAT.TABLES
+WHERE TYPE='N';
+
+Example:
+FEDUSER  CUSTOMER_NK
+FEDUSER  POLICY_NK
+
+================================================================================================================================================================================================================
+
