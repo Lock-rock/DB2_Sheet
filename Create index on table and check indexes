@@ -72,4 +72,9 @@ WHERE I.TABSCHEMA = 'SIEBEL'
   AND I.TABNAME = 'S_ASSET_XM'
 ORDER BY I.INDNAME, K.COLSEQ" > output.txt
 
+=========================================================================================================================================================================================================================
+Run Runstat with SAMPLE with fast:
+db2 "RUNSTATS ON TABLE SIEBEL.S_PAY_PLAN WITH SAMPLE ALLOW WRITE ACCESS"
+db2 "RUNSTATS ON TABLE SIEBEL.S_PAY_PLAN WITH SAMPLE AND DETAILED INDEXES ALL ALLOW WRITE ACCESS"
+db2 "RUNSTATS ON TABLE SIEBEL.S_PAY_PLAN TABLESAMPLE SYSTEM(5) ALLOW WRITE ACCESS"
 
