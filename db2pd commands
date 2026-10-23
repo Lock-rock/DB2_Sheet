@@ -1,0 +1,4 @@
+Check running utilities:
+db2pd -db SBLPRDDB -utilities
+
+  
