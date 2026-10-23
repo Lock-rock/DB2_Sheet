@@ -57,3 +57,19 @@ FROM SYSCAT.INDEXES
 WHERE TABNAME   = 'YOUR_TABLE_NAME'
   AND TABSCHEMA = 'YOUR_SCHEMA_NAME'
 ORDER BY INDEX_NAME;
+
+=========================================================================================================================================================================================================================
+Check index with column name and output file:
+db2 -x "SELECT
+    I.INDNAME,
+    K.COLSEQ,
+    K.COLNAME
+FROM SYSCAT.INDEXES I
+JOIN SYSCAT.INDEXCOLUSE K
+  ON I.INDSCHEMA = K.INDSCHEMA
+ AND I.INDNAME = K.INDNAME
+WHERE I.TABSCHEMA = 'SIEBEL'
+  AND I.TABNAME = 'S_ASSET_XM'
+ORDER BY I.INDNAME, K.COLSEQ" > output.txt
+
+
