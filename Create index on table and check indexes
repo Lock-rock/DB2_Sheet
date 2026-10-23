@@ -78,3 +78,9 @@ db2 "RUNSTATS ON TABLE SIEBEL.S_PAY_PLAN WITH SAMPLE ALLOW WRITE ACCESS"
 db2 "RUNSTATS ON TABLE SIEBEL.S_PAY_PLAN WITH SAMPLE AND DETAILED INDEXES ALL ALLOW WRITE ACCESS"
 db2 "RUNSTATS ON TABLE SIEBEL.S_PAY_PLAN TABLESAMPLE SYSTEM(5) ALLOW WRITE ACCESS"
 
+TABLESAMPLE SYSTEM(5)    -- very fast
+TABLESAMPLE SYSTEM(10)   -- common choice
+TABLESAMPLE SYSTEM(20)   -- more accurate
+TABLESAMPLE SYSTEM(50)   -- near full accuracy
+
+=========================================================================================================================================================================================================================
