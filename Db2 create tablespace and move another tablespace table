@@ -47,3 +47,8 @@ db2 "RUNSTATS ON TABLE ADMINISTRATOR.KYC_DETAILS ON ALL COLUMNS AND INDEXES ALL 
 db2 "ALTER TABLE ADMINISTRATOR.KYC_DETAILS_DOCUMENT ALTER COLUMN EXPIRY_DATE SET DATATYPE VARCHAR(20)"
 db2 "reorg table ADMINISTRATOR.KYC_DETAILS_DOCUMENT"
 db2 "RUNSTATS ON TABLE ADMINISTRATOR.KYC_DETAILS_DOCUMENT ON ALL COLUMNS AND INDEXES ALL ALLOW WRITE ACCESS"
+
+################# Check tablespacle of table ##############################################################################
+db2 "SELECT TABSCHEMA, TABNAME, TBSPACE FROM SYSCAT.TABLES WHERE TABSCHEMA='SIEBEL' AND TABNAME='S_ASSET_XM'"
+
+################# Check tablespacle of table ##############################################################################
