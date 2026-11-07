@@ -75,3 +75,151 @@ db2 "select substr(tabname,1,30), STATS_TIME from syscat.tables
 =========================================================================================================================================
 Delete runing runstat:
 SELECT APPLICATION_HANDLE, APPLICATION_NAME,CLIENT_WRKSTNNAME FROM TABLE(MON_GET_CONNECTION(NULL, -2)) AS T
+
+
+=========================================================================================================================================
+
+Runstat on whole database:
+
+#!/bin/bash
+
+###############################################################################
+# Script Name : Runstats.sh
+# Description : RUNSTATS on all user-defined tables in Db2
+# Database    : SBLPRDDB
+###############################################################################
+
+DB_NAME="SBLPRDDB"
+LOG_DIR="./logs"
+TIMESTAMP=$(date '+%Y%m%d_%H%M%S')
+
+LOG_FILE="${LOG_DIR}/runstats_${TIMESTAMP}.log"
+TABLE_FILE="${LOG_DIR}/tables_${TIMESTAMP}.tmp"
+
+TOTAL=0
+SUCCESS=0
+FAILED=0
+
+mkdir -p "$LOG_DIR" || exit 1
+
+log()
+{
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+cleanup()
+{
+    rm -f "$TABLE_FILE"
+    db2 terminate >> "$LOG_FILE" 2>&1
+}
+
+trap cleanup EXIT
+
+log "=========================================================="
+log "Starting RUNSTATS execution"
+log "Database: $DB_NAME"
+log "=========================================================="
+
+# Connect to database
+db2 connect to "$DB_NAME" >> "$LOG_FILE" 2>&1
+
+if [ $? -ne 0 ]; then
+    log "ERROR: Database connection failed."
+    exit 1
+fi
+
+log "Database connection successful."
+
+# Check connection
+check_connection()
+{
+    db2 "SELECT 1 FROM SYSIBM.SYSDUMMY1" >/dev/null 2>&1
+
+    if [ $? -ne 0 ]; then
+        log "Connection lost. Reconnecting..."
+
+        db2 connect to "$DB_NAME" >> "$LOG_FILE" 2>&1
+
+        if [ $? -ne 0 ]; then
+            log "ERROR: Reconnection failed."
+            return 1
+        fi
+    fi
+
+    return 0
+}
+
+# Generate table list directly into a temporary file
+log "Fetching user-defined tables..."
+
+db2 -x "
+SELECT
+    'RUNSTATS ON TABLE \"' ||
+    RTRIM(TABSCHEMA) ||
+    '\".\"' ||
+    RTRIM(TABNAME) ||
+    '\" WITH DISTRIBUTION AND DETAILED INDEXES ALL ALLOW WRITE ACCESS'
+FROM SYSCAT.TABLES
+WHERE TYPE = 'T'
+AND TABSCHEMA NOT LIKE 'SYS%'
+ORDER BY TABSCHEMA, TABNAME
+" > "$TABLE_FILE" 2>> "$LOG_FILE"
+
+if [ $? -ne 0 ]; then
+    log "ERROR: Failed to generate table list."
+    exit 1
+fi
+
+if [ ! -s "$TABLE_FILE" ]; then
+    log "WARNING: No user-defined tables found."
+    exit 0
+fi
+
+log "Table list generated successfully."
+
+# Execute RUNSTATS one table at a time
+while IFS= read -r RUNSTATS_CMD
+do
+
+    [ -z "$RUNSTATS_CMD" ] && continue
+
+    TOTAL=$((TOTAL + 1))
+
+    if ! check_connection; then
+        log "ERROR: Database connection unavailable."
+        FAILED=$((FAILED + 1))
+        break
+    fi
+
+    log "----------------------------------------------------------"
+    log "Table number: $TOTAL"
+    log "Executing: $RUNSTATS_CMD"
+
+    db2 "$RUNSTATS_CMD" >> "$LOG_FILE" 2>&1
+
+    if [ $? -eq 0 ]; then
+        SUCCESS=$((SUCCESS + 1))
+        log "STATUS: SUCCESS"
+    else
+        FAILED=$((FAILED + 1))
+        log "STATUS: FAILED"
+    fi
+
+done < "$TABLE_FILE"
+
+# Summary
+log "=========================================================="
+log "RUNSTATS EXECUTION SUMMARY"
+log "Total Tables : $TOTAL"
+log "Successful   : $SUCCESS"
+log "Failed       : $FAILED"
+log "Log File     : $LOG_FILE"
+log "=========================================================="
+
+if [ "$FAILED" -gt 0 ]; then
+    log "RESULT: Completed with errors."
+    exit 1
+else
+    log "RESULT: Completed successfully."
+    exit 0
+fi
