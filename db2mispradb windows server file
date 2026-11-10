@@ -1,0 +1,77 @@
+db2 "select count(*) from MISRPA.CLAMPF_1"
+
+Import the data by runing a command similar to:
+
+db2 IMPORT FROM "C:\Users\db2admin\Desktop\CLAMPF" OF DEL INSERT INTO MISRPA.CLAMPF_1
+
+db2 IMPORT FROM "F:\Load_tables\Desktop\CLAMPF" OF ixf INSERT INTO MISRPA.CLAMPF_1
+
+db2 "load from "F:\CSV\ToadCSVFile.csv" of del insert into MISRPA.IBB_TPA"
+
+db2 IMPORT FROM "F:\CSV\ToadCSVFile.csv"  OF DEL INSERT INTO MISRPA.IBB_TPA  >>\IN_HOUSE_PEGA_DATA1.out
+
+db2 IMPORT FROM "F:\Load_tables\CLAMPF" OF DEL INSERT INTO MISRPA.CLAMPF_1
+
+db2 IMPORT FROM "F:\Load_tables\Desktop\CLAMPF" OF ixf INSERT INTO MISRPA.CLAMPF_1
+
+db2 IMPORT FROM "F:\Load_tables\IPMVPF_TEST" OF ixf modified by identityignore messages F:\Load_tables\IPMVPF_TEST_IMPORT.out INSERT INTO MISRPA.IPMVPF
+
+db2 "TRUNCATE TABLE MISRPA.CLAMPF_1 IMMEDIATE"
+  
+db2 IMPORT FROM "E:\load_table\CLAMPF" OF ixf INSERT INTO MISRPA.CLAMPF_1
+
+select tabschema from syscat.tables where tabname='CLAMPF'
+  
+describe select * from MISRPA.CLAMPF;
+
+IMPORT FROM "F:\chandan_health\106_HLT_CLAIM_APR To JUN_2026_6.csv" OF DEL INSERT INTO MISRPA.CLAIM_HEALTH_IIB
+
+db2 IMPORT FROM "F:\CSV\MISRPA.TPA_PEGA_CLAIMS_DATA.csv"  OF DEL INSERT INTO MISRPA.TPA_PEGA_CLAIMS_DATA
+
+db2 "load from "F:\CSV\MISRPA.IN_HOUSE_PEGA_DATA.csv" of del insert into MISRPA.IN_HOUSE_PEGA_DATA"
+
+db2 "truncate table MISRPA.IN_HOUSE_PEGA_DATA immediate"
+
+db2 "select count(*) from MISRPA.IN_HOUSE_PEGA_DATA"
+
+db2 IMPORT FROM "E:\load_table\CLAMPF"  OF DEL INSERT INTO MISRPA.IPMVPF_TEST
+
+IPMVPF_TEST
+
+db2 IMPORT FROM "E:\load_table\CLAMPF" OF ixf INSERT INTO MISRPA.CLAMPF_1
+
+====================================================================================================================================================================================================
+Alok sir mail work:
+
+connect to misrpadb
+
+truncate table MISRPA.POLICY_IIB immediate
+
+IMPORT FROM "F:\CLAIM_HEALTH_IIB\106_HLT.csv" OF DEL INSERT INTO MISRPA.CLAIM_HEALTH_IIB 
+
+IMPORT FROM E:\load_table\1NOV25_TO_15NOV251.csv OF DEL MODIFIED BY COLDEL, MESSAGES E:\load_table/import.log INSERT INTO MISRPA.NOV25_15NOV25
+
+import from "E:\load_table\Marinehimanshu.csv of del modified by identityignore messages "E:\load_table\Marinehimanshu..msg replace into MISRPA.Marine_Cargo_Claim_IIB
+
+select count(*) from MISRPA.POLICY_IIB where month IN ('MAR_1')
+
+====================================================================================================================================================================================================
+Backup script:
+
+db2 backup db MISRPADB user db2admin using qwertyuiop@1 online to F:\fullonline_bkp with 4 buffers buffer 2048 parallelism 2 compress include logs
+
+  MISRPADB.0.DB2.DBPART000.20220904000131
+
+Check backup status:-
+
+Step1:- Open DB2 command prompt.
+
+Step2:-	Connect to database
+
+connect to misrpadb
+
+For backup
+	
+Step3: Using below command check backup complete percentage.
+
+list utilities
