@@ -1,0 +1,43 @@
+tablespaces utilitation:
+db2 "select tbsp_name,tbsp_utilization_percent,tbsp_free_size_kb from sysibmadm.tbsp_utilization where tbsp_name='PRNDTA_4K'"
+	 
+Table in tablespace:
+db2 "SELECT TABSCHEMA,TABNAME,TBSPACE,INDEX_TBSPACE,LONG_TBSPACE FROM SYSCAT.TABLES WHERE TABSCHEMA='PRNSTG' AND TABNAME='P400BATCHES'"
+
+db2 list tablespaces show detail
+Check mountpoint of table space 4:
+
+db2 "LIST TABLESPACE CONTAINERS FOR 4 SHOW DETAIL"
+Output:
+$ db2 "LIST TABLESPACE CONTAINERS FOR 4 SHOW DETAIL"
+
+            Tablespace Containers for Tablespace 4
+
+ Container ID                         = 0
+ Name                                 = /data1/print/PRNDTA_4K/prndta_4k_1
+ Type                                 = File
+ Total pages                          = 1049576
+ Useable pages                        = 1049572
+ Accessible                           = Yes
+ Container ID                         = 1
+ Name                                 = /data2/print/PRNDTA_4K/prndta_4k_1
+ Type                                 = File
+ Total pages                          = 524288
+ Useable pages                        = 524284
+ Accessible                           = Yes
+
+
+db2 "ALTER TABLESPACE PRNDTA_4K ADD (FILE '/data1/print/PRNDTA_4K/prndta_4k_3' 1048576)"
+DB20000I  The SQL command completed successfully.
+$ db2 commit;
+DB20000I  The SQL command completed successfully.
+
+
+Quick reference for your tablespace (4 KB page size):
+
+Pages	Size
+262144	1 GB
+524288	2 GB
+1048576	4 GB
+1572864	6 GB
+2097152	8 GB
